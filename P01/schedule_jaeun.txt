@@ -1,1 +1,11 @@
-schedule_jaeun.txt
+Deliverables for first checkpoint demo:
+
+1. Data and task abstraction.
+   * Analyze the data
+   
+2. State of Art Report.
+   * Figure out the interaction technique.
+3. Write one functional specification and review the specifications of team mates.
+   * Contact a client 
+
+4. Build project prototypes 
