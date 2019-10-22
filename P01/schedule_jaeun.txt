@@ -2,10 +2,13 @@ Deliverables for first checkpoint demo:
 
 1. Data and task abstraction.
    * Analyze the data
+   * Rearrange the tasks
    
 2. State of Art Report.
-   * Figure out the interaction technique.
-3. Write one functional specification and review the specifications of team mates.
+   * Review papers that I've read for writing proposal
+
+3. Functional Specs and Goals
+   * Write one full scenario and review. 
    * Contact a client 
 
 4. Build project prototypes 
