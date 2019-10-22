@@ -3,3 +3,5 @@ Deliverables for first Checkpoint demo:
 2. Contribute to State of Art Report.
 3. Contribute one functional specification and review the specifications of team mates.
 4. Build project prototypes - Roughly around 5-6 prototypes
+5. Preprocess the data - Identify the words and metaphor from the input data and create a data file with list of words, metaphors and linkage between words and metaphors.
+6. POS Tagging - Identify the POS tagger for words and metaphors in the sentences through some onlie POS taggers
