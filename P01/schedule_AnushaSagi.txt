@@ -1,0 +1,5 @@
+Deliverables for first Checkpoint demo:
+1. Contribute to data and task abstraction.
+2. Contribute to State of Art Report.
+3. Contribute one functional specification and review the specifications of team mates.
+4. Build project prototypes - Roughly around 5-6 prototypes
