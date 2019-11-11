@@ -1,0 +1,9 @@
+body {
+  overflow:hidden;
+   margin:0;
+}
+
+text {
+  font-family: sans-serif;
+  pointer-events: none;
+}
