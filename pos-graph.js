@@ -5,6 +5,8 @@
 // .attr("width", width)
 // .attr("height", height);
 
+var colors= ["#1b9e77", "#d95f02", "#386cb0", "#e7298a"];
+
 ////////////////////////////////////////////////////////////
     //////////////////////// Set-up ////////////////////////////
     ////////////////////////////////////////////////////////////
@@ -34,12 +36,15 @@
 
     //Some random data
     var donutData = [
-      {name: "Noun",  value: 20},
-      {name: "Verb",    value: 10},
-      {name: "Adverb",   value: 15},
-      {name: "Adjective",   value: 25},
-      {name: "Pronoun",  value: 30}
-    ];
+      {name: "Noun",  value: 3},
+      {name: "Verb",    value: 2},
+      {name: "Adverb",   value: 2},
+      {name: "Adjective",   value: 2},
+      {name: "Adjective",  value: 5},
+      {name: "Adverb",    value: 2},
+      {name: "Verb",   value: 1},
+      {name: "Noun",   value: 2}
+         ];
 
     //Create a color scale
     var colorScale = d3.scaleLinear()
@@ -78,8 +83,10 @@
       .attr("class", "donutArcs")
       .attr("d", donut_arc)
       .style("fill", function(d,i) {
-        if(i === 7) return "#CCCCCC"; //Other
-        else return colorScale(i); 
+        if(i > 3) i = 7-i;
+        return colors[i];
+        //if(i === 7) return "#CCCCCC"; //Other
+        //else return colorScale(i); 
       })
     .each(function(d,i) {
       //Search pattern for everything between the start and the first capital L
@@ -147,22 +154,37 @@
     }
 
 
-    halfcircle(-1,0,20, -1, 0, "purple");
-    halfcircle(1,0,20, 1, 0, "orange");
-
-
+    var POS_i = 0;
+    var POS_thickness= [8,5,5,3,15,5,2,5];
     var list = d3.selectAll(".donutArcs").each(function(d){
       console.log(d);  
 
+      pos_svg.append("line")
+                         .attr("x1", 0)
+                         .attr("y1", 0)
+                         .attr("x2", (width*0.75/2)*Math.sin((d.startAngle+d.endAngle)*180/6.28 * Math.PI/180))
+                         .attr("y2", -(width*0.75/2)*Math.cos((d.startAngle+d.endAngle)*180/6.28 * Math.PI/180))
+                         .attr("stroke-width", function(){
+                          return POS_thickness[POS_i];
+                         })
+                         .attr("stroke", function(){
+                          POS_i++;
+                          if(POS_i<5) return "#d95f0297";
+                          else return "#984ea697";
+                         });
       
-      pos_svg
-        .append("circle")
-        .style("stroke", "gray")
-        .style("fill", "red")
-        .attr("r", 5)
-        .attr("cx", (width*0.75/2)*Math.sin((d.startAngle+d.endAngle)*180/6.28 * Math.PI/180))
-        .attr("cy", -(width*0.75/2)*Math.cos((d.startAngle+d.endAngle)*180/6.28 * Math.PI/180));
+      // pos_svg
+      //   .append("circle")
+      //   .style("stroke", "gray")
+      //   .style("fill", "red")
+      //   .attr("r", 5)
+      //   .attr("cx", (width*0.75/2)*Math.sin((d.startAngle+d.endAngle)*180/6.28 * Math.PI/180))
+      //   .attr("cy", -(width*0.75/2)*Math.cos((d.startAngle+d.endAngle)*180/6.28 * Math.PI/180));
     })
+
+    halfcircle(-1,0,20, -1, 0, "purple");
+    halfcircle(1,0,20, 1, 0, "orange");
+
     
     // var ribbon = d3.ribbon().radius(10);
     //
