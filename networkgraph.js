@@ -13,6 +13,14 @@ var svg = d3.select("#net-graph-div").append("svg")
     .attr("width", width)
     .attr("height", height);
 
+//add legend
+svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "limegreen")
+svg.append("circle").attr("cx",20).attr("cy",75).attr("r", 6).style("fill", "orchid")
+svg.append("circle").attr("cx",20).attr("cy",100).attr("r", 6).style("fill", "orange")
+svg.append("text").attr("x", 35).attr("y", 50).text("word").style("font-size", "12px").attr("alignment-baseline","middle")
+svg.append("text").attr("x", 35).attr("y", 75).text("word/metaphor").style("font-size", "12px").attr("alignment-baseline","middle")
+svg.append("text").attr("x", 35).attr("y", 100).text("metaphor").style("font-size", "12px").attr("alignment-baseline","middle")
+
 //add encompassing group for the zoom 
 var g = svg.append("g")
     .attr("class", "everything");
@@ -62,9 +70,9 @@ var link = g.append("g")
         tooltip.transition()
             .duration(300)
             .style("opacity", .8);
-      	tooltip.html("Word:"+ d.source.id + 
-                     "<p/>Metaphor:" + d.target.id +
-                     "<p/>Novelty:"  + d.score)
+      	tooltip.html("<b>Word: </b>"+ d.source.id + 
+                     "<b><p/>Metaphor: </b>" + d.target.id +
+                     "<b><p/>Novelty: </b>"  + d.score)
         	.style("left", (d3.event.pageX) + "px")
         	.style("top", (d3.event.pageY + 10) + "px");
     	})
@@ -99,9 +107,24 @@ node.append('circle')
       	tooltip.transition()
         	.duration(300)
         	.style("opacity", .8);
-      	tooltip.html("Word:" + d.id + "<p/>Type:" + d.type)
+        if(d.type=="w")
+        {
+      	tooltip.html("<b>Word: </b>" + d.id + "<p/><b>Type: </b>" + "word")
         	.style("left", (d3.event.pageX) + "px")
         	.style("top", (d3.event.pageY + 10) + "px");
+        }
+        if(d.type=="b")
+        {
+        tooltip.html("<b>Word: </b>" + d.id + "<p/><b>Type: </b>" + "word/metaphor")
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY + 10) + "px");
+        }
+        if(d.type=="m")
+        {
+        tooltip.html("<b>Word: </b>" + d.id + "<p/><b>Type: </b>" + "metaphor")
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY + 10) + "px");
+        }
     	})
   	.on('mouseover.fade', fade(0.1))
     .on("mouseout.tooltip", function() {
