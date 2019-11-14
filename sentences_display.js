@@ -1,5 +1,5 @@
 
-var myJson, x;
+var myJson;
 myJson = {
     "nodes": [
         {
@@ -176,7 +176,7 @@ document.getElementById("sentences-heading").innerHTML = "The sentences with the
 
 function makeUL(array) {
     // Create the list element:
-    var list = document.createElement('ul');
+    var list = document.createElement('ol');
 
     for(var i = 0; i < array.length; i++) {
         // Create the list item:
