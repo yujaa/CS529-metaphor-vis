@@ -22,7 +22,15 @@
     ////////////////////////////////////////////////////////////// 
     ///////////////////// Data &  Scales ///////////////////////// 
     ////////////////////////////////////////////////////////////// 
+    // d3.json("./word_metaphor_data.json", function(error, data){
 
+    // //   var word_POS={};
+    // //   var metaphor_POS={};
+    // //   for (let d of data){
+    // //     if(d.Word_POS_Tag);
+    // //   }
+
+    // // });
 
     //Some random data
     var donutData = [
@@ -45,19 +53,19 @@
       .outerRadius(width*0.75/2 + 30);
 
     //Turn the pie chart 90 degrees counter clockwise, so it starts at the left 
-    // var pie = d3.pie()
-    //   .startAngle(-90 * Math.PI/180)
-    //   .endAngle(-90 * Math.PI/180 + 2*Math.PI)
-    //   .value(function(d) { return d.value; })
-    //   .padAngle(.01)
-    //   .sort(null);
-
     var pie = d3.pie()
-      .startAngle(-1* Math.PI)
-      .endAngle(Math.PI/180 )
+      .startAngle(0)
+      .endAngle(2*Math.PI)
       .value(function(d) { return d.value; })
       .padAngle(.01)
       .sort(null);
+
+    // var pie = d3.pie()
+    //   .startAngle(-1* Math.PI)
+    //   .endAngle(Math.PI/180 )
+    //   .value(function(d) { return d.value; })
+    //   .padAngle(.01)
+    //   .sort(null);
      
     ////////////////////////////////////////////////////////////// 
     //////////////////// Create Donut Chart ////////////////////// 
@@ -84,7 +92,7 @@
       
       //If the end angle lies beyond a quarter of a circle (90 degrees or pi/2) 
       //flip the end and start position
-      if (d.endAngle > 90 * Math.PI/180) {
+      if ((d.endAngle > 90 * Math.PI/180)) {
         var startLoc  = /M(.*?)A/,    //Everything between the first capital M and first capital A
           middleLoc   = /A(.*?)0 0 1/,  //Everything between the first capital A and 0 0 1
           endLoc    = /0 0 1 (.*?)$/; //Everything between the first 0 0 1 and the end of the string (denoted by $)
@@ -93,7 +101,7 @@
         var newStart = endLoc.exec( newArc )[1];
         var newEnd = startLoc.exec( newArc )[1];
         var middleSec = middleLoc.exec( newArc )[1];
-        
+  
         //Build up the new arc notation, set the sweep-flag to 0
         newArc = "M" + newStart + "A" + middleSec + "0 0 0 " + newEnd;
       }//if
@@ -143,4 +151,27 @@
     halfcircle(1,0,20, 1, 0, "orange");
 
 
+    var list = d3.selectAll(".donutArcs").each(function(d){
+      console.log(d);  
 
+      
+      pos_svg
+        .append("circle")
+        .style("stroke", "gray")
+        .style("fill", "red")
+        .attr("r", 5)
+        .attr("cx", (width*0.75/2)*Math.sin((d.startAngle+d.endAngle)*180/6.28 * Math.PI/180))
+        .attr("cy", -(width*0.75/2)*Math.cos((d.startAngle+d.endAngle)*180/6.28 * Math.PI/180));
+    })
+    
+    // var ribbon = d3.ribbon().radius(10);
+    //
+    
+
+    // pos_svg.append("g")
+    // .attr("class", "ribbons")
+    // .selectAll("path")
+    // .enter().append("path")
+    //   .attr("d", ribbon)
+    //   .style("fill", function(d) { return color(d.target.index); })
+    //   .style("stroke", function(d) { return d3.rgb(color(d.target.index)).darker(); });
