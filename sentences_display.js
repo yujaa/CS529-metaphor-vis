@@ -122,19 +122,19 @@ myJson = {
             "source": "commercial",
             "target": "pressures",
             "score": 0.548916423,
-            "sentence": "Under strain for a start because it was technically ill-equipped to avert disaster or to cope with the consequences when disaster struck ; under strain from commercial pressures which , as the inquiry puts it , \ufffd compromised \ufffd safety ; under strain above all because the people on the spot could n't or would n't cope , were weary from gruesome working hours ( the senior signal technician who heads the list of the culpable had had only one day off in the past 13 weeks ) , lacked adequate training , or simply could n't be bothered ."
+            "sentence": "Under strain for a start because it was technically ill-equipped to avert disaster or to cope with the consequences when disaster struck ; under strain from commercial pressures which , as the inquiry puts it , compromised safety ; under strain above all because the people on the spot could n't or would n't cope , were weary from gruesome working hours ( the senior signal technician who heads the list of the culpable had had only one day off in the past 13 weeks ) , lacked adequate training , or simply could n't be bothered ."
         },
         {
             "source": "growth",
             "target": "pressures",
             "score": 0.504554631,
-            "sentence": "This was by no means an accident , since throughout the 1970s a powerful body of media , political , and academic opinion had been constructed around the theme of how Britain was drifting into a \ufffd violent society \ufffd , and how the basis of consent was being shifted by the pressures of immigration and the growth of multi-racial inner city areas ."
+            "sentence": "This was by no means an accident , since throughout the 1970s a powerful body of media , political , and academic opinion had been constructed around the theme of how Britain was drifting into a violent society, and how the basis of consent was being shifted by the pressures of immigration and the growth of multi-racial inner city areas ."
         },
         {
             "source": "makes",
             "target": "growth",
             "score": 0.478775974,
-            "sentence": "Unlike Luk\ufffdcs ' insignificant event from which the universal is precariously drawn out through the narrative , Sartre 's singularity works synecdochally in a conventional antinomy with the universal , the relation between the two structured according to the familiar nineteenth-century model of organic growth or process in which each singular event makes up the whole while , as he puts it , \ufffd the whole is entirely present in the part as its present meaning and as its destiny \ufffd ."
+            "sentence": "Unlike Lukcs ' insignificant event from which the universal is precariously drawn out through the narrative , Sartre 's singularity works synecdochally in a conventional antinomy with the universal , the relation between the two structured according to the familiar nineteenth-century model of organic growth or process in which each singular event makes up the whole while , as he puts it , the whole is entirely present in the part as its present meaning and as its destiny."
         },
         {
             "source": "arguments",
@@ -207,24 +207,28 @@ function getSentences(word){
         }
     }
 
+    document.getElementById('sentences-list').innerHTML = ''
+
     //print 
     for(let d in sentenceArr){
+
         console.log(sentenceArr[d]);
         var newNode = document.createElement('p');
         console.log(wordArr[d]);
         //highlight words
-        sentenceArr[d] = sentenceArr[d].replace(wordArr[d], "<text style='color:red; font-size:18px'>"+wordArr[d]+"</text>");
-        sentenceArr[d] = sentenceArr[d].replace(metaphorArr[d], "<text style='color:blue; font-size:18px'>"+metaphorArr[d]+"</text>");
+        sentenceArr[d] = sentenceArr[d].replace(wordArr[d], "<text style='color:limegreen; font-size:18px'>"+wordArr[d]+"</text>");
+        sentenceArr[d] = sentenceArr[d].replace(metaphorArr[d], "<text style='color:orange; font-size:18px'>"+metaphorArr[d]+"</text>");
         console.log(sentenceArr[d]);
         newNode.innerHTML="* " + sentenceArr[d];
 
+        // Add the contents of sentences to #sentences-tab
         document.getElementById('sentences-list').appendChild(newNode);
     }
 
 
 }
 
-getSentences("powerful");
+//getSentences("powerful");
 
-// Add the contents of sentences to #foo:
+
 //document.getElementById('sentences-list').appendChild(makeUL(sentences));

@@ -116,6 +116,12 @@ node.append('circle')
 	    })
 	 //call zoomnode to zoom nodes on click
   	.on('dblclick',zoomnode) 
+
+    .on('click', function(d){
+        console.log(d.id)
+      getSentences(d.id)
+
+    })
  
 //add texts to nodes    
 var text= node.append("text")
