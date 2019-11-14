@@ -178,6 +178,7 @@ function makeUL(array) {
     // Create the list element:
     var list = document.createElement('ol');
 
+
     for(var i = 0; i < array.length; i++) {
         // Create the list item:
         var item = document.createElement('li');
@@ -193,5 +194,37 @@ function makeUL(array) {
     return list;
 }
 
+function getSentences(word){
+    let sentenceArr= [];
+    let wordArr=[];
+    let metaphorArr=[];
+    for (let d in linkArray){
+        //console.log(linkArray[d])
+        if(linkArray[d].source == word || linkArray[d].target == word){
+            sentenceArr.push(linkArray[d].sentence)
+            wordArr.push(linkArray[d].source)
+            metaphorArr.push(linkArray[d].target)
+        }
+    }
+
+    //print 
+    for(let d in sentenceArr){
+        console.log(sentenceArr[d]);
+        var newNode = document.createElement('p');
+        console.log(wordArr[d]);
+        //highlight words
+        sentenceArr[d] = sentenceArr[d].replace(wordArr[d], "<text style='color:red; font-size:18px'>"+wordArr[d]+"</text>");
+        sentenceArr[d] = sentenceArr[d].replace(metaphorArr[d], "<text style='color:blue; font-size:18px'>"+metaphorArr[d]+"</text>");
+        console.log(sentenceArr[d]);
+        newNode.innerHTML="* " + sentenceArr[d];
+
+        document.getElementById('sentences-list').appendChild(newNode);
+    }
+
+
+}
+
+getSentences("powerful");
+
 // Add the contents of sentences to #foo:
-document.getElementById('sentences-list').appendChild(makeUL(sentences));
+//document.getElementById('sentences-list').appendChild(makeUL(sentences));
