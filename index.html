@@ -25,20 +25,24 @@ text {
 	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-	<div id="top" style="height:100px; background-color:#aaaaaa"></div>
+	<div id="first-row" style="display:flex">
+		<div id="top" style="height:100px; background-color:#aaaaaa"></div>
 
-	<div id="net-graph-div" style="height:400px; width:800px; border: black 1px solid; display:inline-block"></div>
+		<div id="net-graph-div" style="height:400px; width:800px; border: black 1px solid;"></div>
 
-	<div id="filter-div" style="height:400px; width:400px; border: black 1px solid; display:inline-block;">	
+		<div id="filter-div" style="height:400px; width:400px; border: black 1px solid; display:flex-inline;">	
+		</div>
 	</div>
-	<div id="sentences-div" style="height:300px; width:800px; border: black 1px solid; display:block;">
-		sentences
-	</div>
-	<div id="sentences-div" style="height:300px; width:800px; border: black 1px solid; display:block;">
-		https://observablehq.com/@d3/chord-dependency-diagram
+	<div id="second-row" style="display:flex">
+		<div id="sentences-div" style="height:300px; width:800px; border: black 1px solid;">
+
+		</div>
+		<div id="pos-graph-div" style="height:300px; width:300px; border: black 1px solid;">
+		</div>
 	</div>
 	
 </body>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="./networkgraph.js"></script>
+<script src="./pos-graph.js"></script>
