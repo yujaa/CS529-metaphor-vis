@@ -141,8 +141,10 @@ node.append('circle')
   	.on('dblclick',zoomnode) 
 
     .on('click', function(d){
-        console.log(d.id)
-      getSentences(d.id)
+        //console.log(d.id)
+      getSentences(d.id);
+      document.getElementById("zoomed_image").style.visibility = "visible";
+      document.getElementById("pos-graph-div").style.visibility = "visible";
 
     })
  
