@@ -32,15 +32,16 @@ text {
 		<div id="net-graph-div" style="height:400px; width:800px; border: black 1px solid;"></div>
 
 		<div id="filter-div" style="height:400px; width:400px; border: black 1px solid; display:flex-inline;">	
+			<img id="zoomed_image" src="./zoomed.png" alt="Focus of a node" style="width:350px;height:300px; visibility:hidden;">
 		</div>
 	</div>
 	<div id="second-row" style="display:flex">
-		<div id="sentences-div" style="height:300px; width:800px; border: black 1px solid;">
-			<div style="height:298px;width:798px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+		<div id="sentences-div" style="height:300px; width:800px; background-color:white">
+			<div style="height:298px;width:798px;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
 				<p id="sentences-heading"></p><p id="sentences-list"></p>
 			</div>
 		</div>
-		<div id="pos-graph-div" style="height:300px; width:300px; border: black 1px solid;">
+		<div id="pos-graph-div" style="height:300px; width:400px; visibility:hidden;">
 		</div>
 	</div>
 	
@@ -50,4 +51,4 @@ text {
 <script src="./networkgraph.js"></script>
 <script src="./pos-graph.js"></script>
 <script src="./sentences_display.js"></script>
-<script src="./filter.js"></script>
+<!--<script src="./filter.js"></script>-->
