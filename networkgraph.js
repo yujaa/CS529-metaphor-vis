@@ -1,29 +1,26 @@
 
 // var svg = d3.select("#net-graph-div").append("svg")
-
-
     width = 800
     height = 400
     var svg = d3.select("#net-graph-div").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-//var color = d3.scaleOrdinal(d3.schemeCategory20);
-//var size = d3.scaleOrdinal(d3.schemeCategory20);
-
 var color = d3.scaleOrdinal()
   .domain(["w", "b", "m"])
   .range(["green", "purple", "orange"]);
-
-
-var size = d3.scaleLinear()
-  .domain([1,4])
-  .range([6,10]);
-
+  
+var radius = d3.scaleSqrt()
+    .range([0, 6]);
 
 var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody())
+    .force("link", 
+           d3.forceLink().id(function(d) { return d.id; })
+           	.distance(function(d) { return radius(d.source.freq * 3) + radius(d.target.freq * 3); }) //distance among nodes that are connected
+          .strength(function(d) {return 0.6; })
+          )
+    .force("charge", d3.forceManyBody().strength(-20)) //distance among nodes
+		.force("collide", d3.forceCollide().radius(function(d) { return radius(d.freq / 2) + 2; }))
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 d3.json("metaphor_graph.json", function(error, graph) {
@@ -34,30 +31,28 @@ d3.json("metaphor_graph.json", function(error, graph) {
     .selectAll("line")
     .data(graph.links)
     .enter().append("line")
-      .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+      .attr("stroke-width", function(d) { return d.score*5 });
+
 
   var node = svg.append("g")
       .attr("class", "nodes")
     .selectAll("g")
     .data(graph.nodes)
     .enter().append("g")
-    
-  var circles = node.append("circle")
-      .attr("r", function(d) { return size(d.freq); })
-      .attr("fill", function(d) { return color(d.type); })
-      .call(d3.drag()
+  .style('transform-origin', '50% 50%')
+   .call(d3.drag()
           .on("start", dragstarted)
           .on("drag", dragged)
           .on("end", dragended));
-
-  var lables = node.append("text")
-      .text(function(d) {
-        return d.id;
-      })
-      .attr('x', 6)
-      .attr('y', 3);
-
-  node.append("title")
+  
+  node.append('circle')
+      .attr("r", function(d) { return radius(d.freq); })
+      .attr("fill", function(d) { return color(d.type); })
+    
+  
+  node.append("text")
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
       .text(function(d) { return d.id; });
 
   simulation
@@ -97,4 +92,3 @@ function dragended(d) {
   d.fx = null;
   d.fy = null;
 }
-
