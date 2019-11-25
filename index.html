@@ -17,11 +17,11 @@ text {
   font-size: 10px;
 }
 
-
 </style>
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="./model/styles.css">
 </head>
 <body>
@@ -32,7 +32,12 @@ text {
 		<div id="net-graph-div" style="height:400px; width:800px; border: black 1px solid;"></div>
 
 		<div id="filter-div" style="height:400px; width:400px; border: black 1px solid; display:flex-inline;">	
-			<img id="zoomed_image" src="./zoomed.png" alt="Focus of a node" style="width:350px;height:300px; visibility:hidden;">
+		  <div class="search-container">
+		      <input type="text" placeholder="Search.." name="search" id="search-box">
+		      <button type="submit" onclick="search()"><i class="fa fa-search"></i></button>
+		  </div>
+
+			<!-- <img id="zoomed_image" src="./zoomed.png" alt="Focus of a node" style="width:350px;height:300px; visibility:hidden;"> -->
 		</div>
 	</div>
 	<div id="second-row" style="display:flex">
@@ -48,9 +53,11 @@ text {
 </body>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="./model/data_model.js"></script>
 <script src="./model/networkgraph_model.js"></script>
 <script src="./model/pos_model.js"></script>
 
+<script src="./controller/filter_controller.js"></script>
 <script src="./controller/networkgraph_controller.js"></script>
 <script src="./controller/sentence_controller.js"></script>
 
