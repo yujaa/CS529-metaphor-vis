@@ -60,29 +60,11 @@ function node_mousemove(){
 
 function node_click(d){
   getSentences(d.id);
-  document.getElementById("zoomed_image").style.visibility = "visible";
+  //document.getElementById("zoomed_image").style.visibility = "visible";
   document.getElementById("pos-graph-div").style.visibility = "visible";
 }
 
  
- //Zoom function-currently need to work on it.
-function zoom_actions(){
-    g.attr("transform", d3.event.transform)
-    console.log("hi")
-  }
-
-function ticked() {
-  link
-      .attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; });
-
-  node
-      .attr("transform", function(d) {
-        return "translate(" + d.x + "," + d.y + ")";
-      })
-}
 
 //starting from here to line 170 are for checking the neighbours(level-1) of a highlighted node 
 
