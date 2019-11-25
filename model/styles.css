@@ -12,7 +12,7 @@ text {
 	  stroke: #c1c1c1;
     stroke-width: 2px;
     pointer-events: all;
-	}
+	} 
 
   .node circle {
 	  pointer-events: all;
@@ -32,5 +32,31 @@ text {
     box-shadow: 3px 3px 10px rgba(0, 0, 0, .5);
     pointer-events: none;
   }
+
+.search-container {
+  float: right;
+}
+input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+  background: #eeeeee;
+}
+
+.search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #bbbbbb;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #ccc;
+}
   
 
