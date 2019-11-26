@@ -129,13 +129,13 @@ pos_svg.append("line")
          })
          .attr("stroke", function(){
           POS_i++;
-          if(POS_i<5) return "#d95f0297";
-          else return "#984ea697";
+          if(POS_i<5) return "orange";
+          else return "limegreen";
          });
   
 
 })
 
-halfcircle(-1,0,20, -1, 0, "purple");
+halfcircle(-1,0,20, -1, 0, "limegreen");
 halfcircle(1,0,20, 1, 0, "orange");
 
