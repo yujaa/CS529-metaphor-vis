@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-
 .links line {
   stroke: #999;
   stroke-opacity: 0.6;
 }
-
 .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px;
 }
-
 text {
   font-family: sans-serif;
   font-size: 10px;
 }
-
 </style>
 <!DOCTYPE html>
 <meta charset="utf-8">
@@ -37,12 +33,23 @@ text {
 		      <button style="font-size:90%;" type="submit" onclick="search()"><i class="fa fa-search"></i></button>
 		  </div>
 
-		  <div id="charts">
+		  <div style="display:block; margin: 30px 10px; font-weight: bold"id="charts">
 			<div id="hour-chart" class="chart">
-			  <div class="title"><p style="font-size:90%;">Score Histogram</p></div>
+			  <p>Score Histogram</p>
 			</div>
 			<div id="lists">
 			  <div id="flight-list" class="list"></div>
+			</div>
+	      </div>
+
+	      <div id="pos-filter">
+	      	<p style=" margin: 30px 10px; font-weight: bold;">POS Filtering</p>
+	      	<div style="display:inline-flex;">
+		      	<input class="pos-option" type="checkbox" id="noun" value="noun" onclick="checkbox()" >Noun<br>
+		      	<input class="pos-option" type="checkbox" id="pronoun" value="pronoun" onclick="checkbox()" >Pronoun<br>
+				<input class="pos-option" type="checkbox" id="verb" value="verb" onclick="checkbox() " checked>Verb<br>
+				<input class="pos-option" type="checkbox" id="adjective" value="adjective" onclick="checkbox()" >Adjective<br>
+				<input class="pos-option" type="checkbox" id="adverb" value="adverb" onclick="checkbox()" >Adverb<br>
 			</div>
 	      </div>
 
