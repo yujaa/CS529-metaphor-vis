@@ -12,9 +12,14 @@ d3.json("./model/data/train_graph_data.json", function(error, data) {
 
 
 async function filter_by_keyword(data, keyword){
+  
   d3.json("./model/data/train_graph_data.json", function(error, data) {
     App.data = data;
-    var filteredLinks = data.links.filter(d=> keyword.includes(d.target)  || keyword.includes(d.source));
+    //POS Filtering
+    let pos = getChecked();
+
+    var filteredLinks = data.links.filter(d=> (keyword.includes(d.target) || keyword.includes(d.source)));
+    filteredLinks = filteredLinks.filter(d=> (pos.includes(d.source_POS) && pos.includes(d.target_POS)) );
 
     var filteredNodes = Object.values(filteredLinks.reduce(function(t,v){
                           if(!t[v.source]){
@@ -30,7 +35,8 @@ async function filter_by_keyword(data, keyword){
             nodes: filteredNodes,
             links: filteredLinks
         };
-   console.log(data)
+   
+        
    draw_graph(filteredGraph);
   });
   
@@ -103,17 +109,17 @@ d3.csv("../model/data/train_data.csv", function(error, data){
   async function datasetList(div) {
     var dataByScore = nestByScore.entries(score.top(10000));
     let promise = new Promise((resolve, reject) => {
-        var keyword = [];
+        App.keyword = [];
         (dataByScore[0].values).forEach(function(value, index){
                           if(value.Word == "undefined" || value.Metaphor=="undefined"){}
                           else{
-                            keyword.push(value.Word); 
-                            keyword.push(value.Metaphor)
+                            App.keyword.push(value.Word); 
+                            App.keyword.push(value.Metaphor)
                           };
                         });
-        keyword = keyword.filter(distinct);
+        App.keyword = App.keyword.filter(distinct);
         //console.log(keyword);
-        resolve(keyword); 
+        resolve(App.keyword); 
       });
 
     let keyword = await promise;
