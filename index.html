@@ -29,13 +29,22 @@ text {
 		<h1 style="color:#045a8d; text-align:center;">Exploring the Novelty of Metaphor through visualization</h1>
 	</div>
 	<div id="first-row" style="display:flex">
-		<div id="net-graph-div" style="height:400px; width:800px; border: black 1px solid;"></div>
+		<div id="net-graph-div" style="height:400px; width:900px; border: black 1px solid;"></div>
 
 		<div id="filter-div" style="height:400px; width:400px; border: black 1px solid; display:flex-inline;">	
 		  <div class="search-container">
 		      <input type="text" placeholder="Search.." name="search" id="search-box">
 		      <button type="submit" onclick="search()"><i class="fa fa-search"></i></button>
 		  </div>
+
+		  <div id="charts">
+			<div id="hour-chart" class="chart">
+			  <div class="title">Score Histogram</div>
+			</div>
+			<div id="lists">
+			  <div id="flight-list" class="list"></div>
+			</div>
+	      </div>
 
 			<!-- <img id="zoomed_image" src="./zoomed.png" alt="Focus of a node" style="width:350px;height:300px; visibility:hidden;"> -->
 		</div>
@@ -53,6 +62,8 @@ text {
 </body>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="./controller/crossfilter.v1.min.js"></script>
+
 <script src="./model/data_model.js"></script>
 <script src="./model/networkgraph_model.js"></script>
 <script src="./model/pos_model.js"></script>
@@ -61,6 +72,7 @@ text {
 <script src="./controller/networkgraph_controller.js"></script>
 <script src="./controller/sentence_controller.js"></script>
 
+<script src="./view/filter_view.js"></script>
 <script src="./view/networkgraph_view.js"></script>
 <script src="./view/sentence_view.js"></script>
 <script src="./view/pos_view.js"></script>

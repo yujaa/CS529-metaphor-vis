@@ -1,14 +1,14 @@
 
 var App={};
 
-width = 800
+width = 900
 height = 400
 
 //tooltip to show details
 var tooltip = d3.select("body")
-	.append("div")
-	.attr("class", "tooltip")
-	.style("opacity", 0);
+  .append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
 
 //append an svg for the network graph
 App.svg = d3.select("#net-graph-div").append("svg")
@@ -16,6 +16,7 @@ App.svg = d3.select("#net-graph-div").append("svg")
     .attr("height", height);
 
 var svg =  App.svg;
+
 
 //add legend
 svg.append("circle").attr("cx",20).attr("cy",50).attr("r", 6).style("fill", "limegreen")
@@ -47,11 +48,11 @@ const forceY = d3.forceY(height / 2).strength(0.015)
 var simulation = d3.forceSimulation()
     .force("link", 
            d3.forceLink().id(function(d) { return d.id; })
-           	             .distance(function(d) { return radius(d.source.freq * 7) + radius(d.target.freq *7); }) //distance among nodes that are connected
+                         .distance(function(d) { return radius(d.source.freq * 7) + radius(d.target.freq *7); }) //distance among nodes that are connected
                          .strength(function(d) {return 0.6; }) //how zoomed it is
           )
     .force("charge", d3.forceManyBody().strength(-25)) //distance among nodes that are not connected
-	.force("collide", d3.forceCollide().radius(function(d) { return radius(d.freq / 2) + 2; }))
+  .force("collide", d3.forceCollide().radius(function(d) { return radius(d.freq / 2) + 2; }))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .force('x', forceX)
     .force('y',  forceY);

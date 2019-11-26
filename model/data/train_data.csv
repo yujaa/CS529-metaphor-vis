@@ -1,4 +1,4 @@
-,ID,Word,Metaphor,Score,Word POS Tag,Metaphor POS Tag,Sentence
+index,ID,Word,Metaphor,Score,Word_POS_Tag,Metaphor_POS_Tag,Sentence
 0,14103,worth,free,0.369248292,Noun,Adjective,So I get a free twenty five pound worth of Marks and Spencers erm gift vouchers which .
 1,4603,fretted,mother,1.436512943,Verb,Noun,In the fitting rooms at Taylors she fussed and fretted over her creations like a mother hen and though Paula was overawed by the great designer she also liked her on sight .
 2,3706,attitudes,lax,0.994270517,Noun,Adjective,"Studies in this area have indicated that too strict or too lax parental attitudes increase the risk of delinquency ( the work of John Bowlby , for example ) ; they have found that if a young child is deprived of close personal relationships with parents or parent figures then   problem behaviour   is more common ."
