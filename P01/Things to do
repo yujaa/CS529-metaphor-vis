@@ -1,0 +1,22 @@
+Score Histogram:
+1. Limit the range - pointer value
+2. Value showing - Novelty value
+3. Y-axis - Frequency of word-metaphor pairs
+
+
+Search:
+1. Enter - display graph
+2. searches - check everything in POS
+3. score slider - disappear
+4. On refresh - remove the searched word in the search box
+
+N/W Graph:
+1. Nodes, links, thickness, frequency
+2. Hover - show edge labels
+3. search - show edge labels
+4. Click - show edge labels
+5. Opacity of nodes and colors change
+6. Drag n/w from top - should appear in the center
+
+POS Encoding:
+POS bargraph
