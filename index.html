@@ -25,12 +25,14 @@ text {
 		<h1 style="color:#045a8d; text-align:center;">Exploring the Novelty of Metaphor through visualization</h1>
 	</div>
 	<div id="first-row" style="display:flex">
-		<div id="net-graph-div" style="height:400px; width:1100px; border: black 1px solid; border-width: thin;"></div>
+		<div id="net-graph-div" style="height:600px; width:1200px; border: black 1px solid; border-width: thin;"></div>
 
-		<div id="filter-div" style="height:400px; width:440px; border: black 1px solid; border-width: thin; display:flex-inline;">	
+		<div id="filter-div" style="height:500px; width:400px; border: black 1px solid; border-width: thin; display:flex-inline;">	
 		  <div class="search-container">
 		      <input style="font-size:90%;" type="text" placeholder="Search.." name="search" id="search-box">
-		      <button style="font-size:90%;" type="submit" onclick="search()"><i class="fa fa-search"></i></button>
+		      <button style="font-size:90%; visibility:hidden;" type="submit" onclick="clear_search()" id="clear-button"> <i class="fa fa-close"></i></button>
+		      <button style="font-size:90%;" type="submit" onclick="search()" id="search-button"><i class="fa fa-search"></i></button>
+
 		  </div>
 
 		  <div style="display:block; margin: 30px 10px; font-weight: bold"id="charts">

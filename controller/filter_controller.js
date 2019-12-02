@@ -3,17 +3,37 @@ var App = App ||{};
 var filteredGraph;
 var checked_w = ["Noun", "Verb", "Adjective", "Adverb"];
 var checked_m = ["Noun", "Verb", "Adjective", "Adverb"];
+var prevBrushRange;
 
 function search(){
   d3.json("./model/data/train_graph_data.json", function(error, data) {
+    //remember the brush range
+    prevBrushRange = App.brushRange; 
     App.keyword = document.getElementById('search-box').value;
     filter_by_keyword_score(data, App.keyword, 0, 2.5);
     //Show all scores
     brushAdjust(0, 2.5);
 
+    //search box 
+    document.getElementById("search-box").readOnly = true;
+    document.getElementById("search-button").style.visibility = "hidden";
+    document.getElementById("clear-button").style.visibility = "visible";
   })
-  
 }
+
+function clear_search(){
+    //search box 
+    document.getElementById("search-box").removeAttribute("readonly");
+    document.getElementById("search-box").value="";
+    document.getElementById("search-button").style.visibility = "visible";
+    document.getElementById("clear-button").style.visibility = "hidden";
+    d3.json("./model/data/train_graph_data.json", function(error, data) {
+      App.keyword = null;
+      filter_by_keyword_score(data, null, prevBrushRange[0], prevBrushRange[1]);
+      brushAdjust(prevBrushRange[0], prevBrushRange[1]);
+    });
+}
+
 
 function checkbox(){
 

@@ -1,8 +1,8 @@
 
 var App={};
 
-width = 1200
-height = 400
+width = 1200;
+height = 600;
 
 //tooltip to show details
 var tooltip = d3.select("body")
@@ -57,3 +57,20 @@ var simulation = d3.forceSimulation()
     .force('x', forceX)
     .force('y',  forceY);
 
+
+//legend
+var legend = svg.append("g")
+.attr("class", "legend")
+.attr("transform", "translate(" + (50) + "," + (height - 20) + ")")
+  .selectAll("g")
+    .data([10, 30, 50])
+  .enter().append("g");
+
+legend.append("circle")
+    .attr("cy", function(d) { return -radius(d); })
+    .attr("r", radius);
+
+legend.append("text")
+    .attr("y", function(d) { return -2 * radius(d); })
+    .attr("dy", "1.3em")
+    .text(d3.format(".1s"));
