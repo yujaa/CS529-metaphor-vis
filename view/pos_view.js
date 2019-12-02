@@ -117,7 +117,7 @@ var halfcircle = function(x,y,rad, start, end, color) {
 var POS_i = 0;
 var POS_thickness= [8,5,5,3,15,5,2,5];
 var list = d3.selectAll(".donutArcs").each(function(d){
-  console.log(d);  
+  //console.log(d);  
 
 pos_svg.append("line")
          .attr("x1", 0)

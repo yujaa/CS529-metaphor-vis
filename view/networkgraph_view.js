@@ -12,7 +12,7 @@ function draw_graph(data){
             .enter()
             .append("line")
             .attr("class", "link")
-              .attr("stroke-width", function(d) { console.log("D.SCORE" + d.source+d.target+d.score);
+              .attr("stroke-width", function(d) { //console.log("D.SCORE" + d.source+d.target+d.score);
                 return d.score*4 });
 
         link.append("title")
@@ -46,7 +46,7 @@ function draw_graph(data){
             .attr("startOffset", "50%")
             .text(function (d) {var f = d3.format(".3f")
               return f(d.score)})
-            console.log(edgelabels);
+            //console.log(edgelabels);
 
 
 
@@ -134,16 +134,15 @@ zoom_handler(svg);
 
    var transform = d3.event.transform;
    g.attr("transform",transform.toString())
-  console.log(transform)
+  //console.log(transform)
   if(transform.k<1.5){
-    console.log("hidshbfdjbjhd")
+    //console.log("hidshbfdjbjhd")
     var hull=d3.selectAll('.edgelabel')
     hull.attr("visibility","hidden")
  
   }
 
     else{
-    console.log("hidshbfdjbjhd")
     var hull=d3.selectAll('.edgelabel')
     hull.attr("visibility","visible")
 
@@ -209,7 +208,7 @@ zoom_handler(svg);
 
     };
 
-    console.log(d.id)
+    //console.log(d.id)
   }
 
   //called to zoom

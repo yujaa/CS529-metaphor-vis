@@ -1,6 +1,11 @@
 var App={};
 
 var filteredGraph; 
+var charts;
+var brush;
+var gBrush;
+var x;
+App.brushRange = [1.2, 1.3];
 
 
 d3.json("./model/data/train_graph_data.json", function(error, data) {
@@ -11,24 +16,28 @@ d3.json("./model/data/train_graph_data.json", function(error, data) {
 })
 
 
-async function filter_by_keyword(data, keyword){
+async function filter_by_keyword_score(data, keyword, minScore, maxScore){
   
   d3.json("./model/data/train_graph_data.json", function(error, data) {
     App.data = data;
     //POS Filtering
-    let pos = getChecked();
+    let pos_w = getChecked_w();
+    let pos_m = getChecked_m();
 
-    var filteredLinks = data.links.filter(d=> (keyword.includes(d.target) || keyword.includes(d.source)));
-    filteredLinks = filteredLinks.filter(d=> (pos.includes(d.source_POS) && pos.includes(d.target_POS)) );
+    var filteredLinks = data.links.filter(d=> (d.score >= minScore)&&(d.score <= maxScore)&&
+                                          ((keyword.includes(d.target) || keyword.includes(d.source))));
+
+    filteredLinks = filteredLinks.filter(d=> (pos_w.includes(d.source_POS) && pos_m.includes(d.target_POS)) );
 
     var filteredNodes = Object.values(filteredLinks.reduce(function(t,v){
-                          if(!t[v.source]){
-                            t[v.source] = data.nodes.filter(o => o.id === v.source)[0]
-                          }
-                          if(!t[v.target]){
-                            t[v.target] = data.nodes.filter(o => o.id === v.target)[0]
-                          }
+                            if(!t[v.source]){
+                              t[v.source] = data.nodes.filter(o => o.id === v.source)[0]
+                            }
+                            if(!t[v.target]){
+                              t[v.target] = data.nodes.filter(o => o.id === v.target)[0]
+                            }
                           return t;
+                       
                         },{}))
    
     filteredGraph = {
@@ -47,27 +56,26 @@ d3.csv("../model/data/train_data.csv", function(error, data){
   var formatNumber = d3.format(",d");
 
   var dataset = crossfilter(data),
-          all = dataset.groupAll(),
-         word = dataset.dimension(function(d){return d.Word}),
-     metaphor = dataset.dimension(function(d){return d.Metaphor}),
-        score = dataset.dimension(function(d){return d.Score}),
-       scores = score.group(function(d){return Math.floor(d *100) / 100}),
-     word_pos = dataset.dimension(function(d){return d.Word_POS_Tag}),
- metaphor_pos = dataset.dimension(function(d){return d.Metaphor_POS_Tag});
+      all = dataset.groupAll(),
+      word = dataset.dimension(function(d){return d.Word}),
+      metaphor = dataset.dimension(function(d){return d.Metaphor}),
+      score = dataset.dimension(function(d){return d.Score}),
+      scores = score.group(function(d){return Math.floor(d *100) / 100}),
+      word_pos = dataset.dimension(function(d){return d.Word_POS_Tag}),
+      metaphor_pos = dataset.dimension(function(d){return d.Metaphor_POS_Tag});
 
-    var nestByScore = d3.nest()
+  var nestByScore = d3.nest()
       .key(function(d) { return d.score; });
 
 
-   var charts = [
-
+  charts = [
     barChart()
         .dimension(score)
         .group(scores)
-      .x(d3.scaleLinear()
+        .x(d3.scaleLinear()
         .domain([0, 2.5])
         .rangeRound([0, 10 * 35]))
-        .filter([1.8, 1.85])
+        .filter([1.2, 1.3])
 
   ];
 
@@ -109,22 +117,29 @@ d3.csv("../model/data/train_data.csv", function(error, data){
   async function datasetList(div) {
     var dataByScore = nestByScore.entries(score.top(10000));
     let promise = new Promise((resolve, reject) => {
-        App.keyword = [];
-        (dataByScore[0].values).forEach(function(value, index){
-                          if(value.Word == "undefined" || value.Metaphor=="undefined"){}
-                          else{
-                            App.keyword.push(value.Word); 
-                            App.keyword.push(value.Metaphor)
-                          };
-                        });
-        App.keyword = App.keyword.filter(distinct);
-        //console.log(keyword);
+        if(App.keyword == null){
+          App.keyword = [];
+          (dataByScore[0].values).forEach(function(value, index){
+                            if(value.Word == "undefined" || value.Metaphor=="undefined"){}
+                            else{
+                              App.keyword.push(value.Word); 
+                              App.keyword.push(value.Metaphor);
+
+                            };
+                          });
+          App.keyword = App.keyword.filter(distinct);
+        }
+          //console.log(keyword);
         resolve(App.keyword); 
+       
+
       });
 
     let keyword = await promise;
     let promise2 = new Promise((resolve, reject) =>{
-      filter_by_keyword(App.data,keyword);
+
+
+    filter_by_keyword_score(App.data, keyword, App.brushRange[0], App.brushRange[1]);
       
     });
 
@@ -140,16 +155,14 @@ d3.csv("../model/data/train_data.csv", function(error, data){
     if (!barChart.id) barChart.id = 0;
 
     var margin = {top: 10, right: 10, bottom: 20, left: 10},
-        x,
         y = d3.scaleLinear().range([100, 0]),
         id = barChart.id++,
         axis = d3.axisBottom(),
-        brush = d3.brushX(),
         brushDirty,
         dimension,
         group,
-        round,
-        gBrush;
+        round;
+    brush = d3.brushX();
 
     function chart(div) {
       var width = x.range()[1],
@@ -202,13 +215,14 @@ d3.csv("../model/data/train_data.csv", function(error, data){
               .attr("class", "brush")
               .call(brush);
 
-          gBrush.selectAll(".handle--custom")
-              .data([{type: "w"}, {type: "e"}])
-            .enter().append("path")
-              .attr("class", "brush-handle")
-              .attr("cursor", "ew-resize")
-              .attr("d", resizePath)
-              .style("display", "none")
+          // handle
+          // gBrush.selectAll(".handle--custom")
+          //     .data([{type: "w"}, {type: "e"}])
+          //   .enter().append("path")
+          //     .attr("class", "brush-handle")
+          //     .attr("cursor", "ew-resize")
+          //     .attr("d", resizePath)
+          //     .style("display", "none")
         }
 
         // Only redraw the brush if set externally.
@@ -298,6 +312,7 @@ d3.csv("../model/data/train_data.csv", function(error, data){
         }
       }
 
+
       // move brush handles to start and end of range
       g.selectAll(".brush-handle")
           .style("display", null)
@@ -320,6 +335,9 @@ d3.csv("../model/data/train_data.csv", function(error, data){
     brush.on("end.chart", function() {
       // reset corresponding filter if the brush selection was cleared
       // (e.g. user "clicked off" the active range)
+      App.brushRange = d3.event.selection || d3.brushSelection(this)
+      App.brushRange = [(App.brushRange[0]/350)* 2.5, (App.brushRange[1]/350)* 2.5];
+      console.log(App.brushRange);
       if (!d3.brushSelection(this)) {
         reset(id);
       }
@@ -379,3 +397,10 @@ d3.csv("../model/data/train_data.csv", function(error, data){
 function distinct(value, index, self) { 
     return self.indexOf(value) === index;
 }
+
+function brushAdjust(minScore, maxScore){
+  App.brushRange = [minScore, maxScore];
+  //charts[0].filter([minScore, maxScore]);
+  gBrush.call(brush.move, [minScore, maxScore].map(x));
+}
+
