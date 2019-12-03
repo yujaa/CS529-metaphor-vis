@@ -1,7 +1,7 @@
 
 var App={};
 
-width = 1200;
+width = document.getElementById("net-graph-div").getBoundingClientRect().width;
 height = 600;
 
 //tooltip to show details
