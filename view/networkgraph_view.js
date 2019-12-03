@@ -2,106 +2,138 @@ var App = App ||{};
 
 //load data
 
-function draw_graph(data){
+function draw_graph(data, mode, word, metaphor){
   graph = data;
   //console.log(data);
   d3.select("g").selectAll("*").remove();
   //append a group for the links and load links from json
-      link = g.selectAll(".link")
-            .data(graph.links)
-            .enter()
-            .append("line")
-            .attr("class", "links")
-              .attr("stroke-width", function(d) {
-                return d.score*4; });
+  link = g.selectAll(".link")
+        .data(graph.links)
+        .enter()
+        .append("line")
+        .attr("class", "links")
+          .attr("stroke-width", function(d) {
+            return d.score*4; });
 
-        link.append("title")
-            .text(function (d) {return d.score});
+  link.append("title")
+      .text(function (d) {return d.score});
 
-        edgepaths = g.selectAll(".edgepath")
-            .data(graph.links)
-            .enter()
-            .append('path')
-            .attr('class', 'edgepath')
-           //  .attr('fill-opacity', 1)
-         //     .attr('stroke-opacity', 1)
-                .attr('id', function (d, i) {return 'edgepath' + i})
-      //      .style("pointer-events", "none");
+  edgepaths = g.selectAll(".edgepath")
+      .data(graph.links)
+      .enter()
+      .append('path')
+      .attr('class', 'edgepath')
+     //  .attr('fill-opacity', 1)
+   //     .attr('stroke-opacity', 1)
+          .attr('id', function (d, i) {return 'edgepath' + i})
+//      .style("pointer-events", "none");
 
-        edgelabels = g.selectAll(".edgelabel")
-            .data(graph.links)
-            .enter()
-            .append('text')
-            .style("fill-opacity", 0)
-            .attr('class', 'edgelabel')
-            .attr( 'id', function (d, i) {return 'edgelabel' + i})
-            .attr('font-size', "5px")
-        //    .attr('fill', '#aaa')
-            
+  edgelabels = g.selectAll(".edgelabel")
+      .data(graph.links)
+      .enter()
+      .append('text')
+      .style("fill-opacity", 0)
+      .attr('class', 'edgelabel')
+      .attr( 'id', function (d, i) {return 'edgelabel' + i})
+      .attr('font-size', "5px")
+  //    .attr('fill', '#aaa')
+      
 
-        textlink=edgelabels.append('textPath')
-            .attr('xlink:href', function (d, i) {return '#edgepath' + i})
-            .style("text-anchor", "middle")
-        //    .style("pointer-events", "none")
-            .attr("startOffset", "50%")
-            .text(function (d) {var f = d3.format(".3f")
-              return f(d.score)})
-            //console.log(edgelabels);
+  textlink=edgelabels.append('textPath')
+      .attr('xlink:href', function (d, i) {return '#edgepath' + i})
+      .style("text-anchor", "middle")
+  //    .style("pointer-events", "none")
+      .attr("startOffset", "50%")
+      .text(function (d) {var f = d3.format(".3f")
+        return f(d.score)})
+      //console.log(edgelabels);
 
 
 
-//tooltip to display link details
-link
-  .on('mouseover.tooltip', function(d) {
-    link_mouseover_tooltip(d);
-  })
-  .on("mouseout.tooltip", function() {
-    link_mouseout_tooltip()
-  })
-  .on('mouseout.fade', fade(1))
-  .on("mousemove", function() {
-   link_mousemove();
-  });
-
-//append a group for the nodes and load node data from json
-var node =g.append("g")
-        .attr("class", "nodes")
-        .selectAll("g")
-        .data(graph.nodes)
-        .enter().append("g")
-        .style('transform-origin', '50% 50%')
-        .call(d3.drag() //functions to drag and drop
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended));
-
-//append circles to the node group and add tooltip details
-node.append('circle')
-      .attr("r", function(d) { return radius(d.freq)*.5; })
-      .attr("fill", function(d) { return color(d.type); })
-      .on('mouseover.tooltip', function(d) {
-        node_mouseover_tooltip(d);
-      })
-    .on('mouseover.fade', fade(0.1))
-    .on("mouseout.tooltip", function() {
-        node_mouseout_tooltip();
-      })
-    .on('mouseout.fade', fade(1))
-    .on('mouseover.show_novelty', show_novelty(0))
-    .on('mouseout.fade_novelty', fade_novelty())
-      .on("mousemove", function() {
-        node_mousemove();
-      })
-   //call zoomnode to zoom nodes on click
-    .on('dblclick',zoomnode) 
-
-    .on('click', function(d){
-        //console.log(d.id)
-      getSentences(d.id);
-//document.getElementById("zoomed_image").style.visibility = "visible";
-      document.getElementById("pos-graph-div").style.visibility = "visible";
-
+  //tooltip to display link details
+  link
+    .on('mouseover.tooltip', function(d) {
+      link_mouseover_tooltip(d);
     })
+    .on("mouseout.tooltip", function() {
+      link_mouseout_tooltip()
+    })
+    .on('mouseout.fade', fade(1))
+    .on("mousemove", function() {
+     link_mousemove();
+    });
+
+  //append a group for the nodes and load node data from json
+  var node =g.append("g")
+          .attr("class", "nodes")
+          .selectAll("g")
+          .data(graph.nodes)
+          .enter().append("g")
+          .style('transform-origin', '50% 50%')
+          .call(d3.drag() //functions to drag and drop
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+  //append circles to the node group and add tooltip details
+  node.append('circle')
+        .attr("r", function(d) { return radius(d.freq)*.5; })
+        .attr("fill", function(d) { 
+          if(mode == 1){
+            if(d.id == App.keyword){
+              //2 colors in one node
+              var totalLinks = d.freq;
+              var wordPercent = (word.length / totalLinks)*100;
+              if (word.length ===0){
+                return 'limegreen';
+              }
+              else if (metaphor.length ===0){
+                return 'orange';
+              }
+              else {
+                var rand = randNum();
+                var grad1 = svg.append('g');
+                gradient(grad1, wordPercent+"%", (rand));
+                return 'url(#gradient'+(rand)+')';
+              }
+
+            }
+            else{
+              //color metaphor and word nodes
+              console.log(d.id);
+              console.log(metaphor);
+              if(metaphor.includes(d.id))
+                return 'orange';
+              if(word.includes(d.id))
+                return 'limegreen';
+            }
+          }
+          else
+            return color(d.type); 
+        })
+        .on('mouseover.tooltip', function(d) {
+          node_mouseover_tooltip(d);
+        })
+      .on('mouseover.fade', fade(0.1))
+      .on("mouseout.tooltip", function() {
+          node_mouseout_tooltip();
+        })
+      .on('mouseout.fade', fade(1))
+      .on('mouseover.show_novelty', show_novelty(0))
+      .on('mouseout.fade_novelty', fade_novelty())
+        .on("mousemove", function() {
+          node_mousemove();
+        })
+     //call zoomnode to zoom nodes on click
+      .on('dblclick',zoomnode) 
+
+      .on('click', function(d){
+          //console.log(d.id)
+        getSentences(d.id);
+  //document.getElementById("zoomed_image").style.visibility = "visible";
+        document.getElementById("pos-graph-div").style.visibility = "visible";
+
+      })
  
 
 
@@ -268,3 +300,33 @@ function dragended(d) {
   d.fy = null;
 }
 
+
+var randNum = function () {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+
+function gradient (el, wordPercent, i){
+  var gradi = svg.append("defs")
+        .append("linearGradient")
+        .attr('id', 'gradient'+i)
+        .attr('x1', '0%')
+        .attr('y1', '100%')
+        .attr('x2', '0%')
+        .attr('y2', '0%');
+
+    gradi.append('stop')
+        .attr('offset', '0%')
+        .attr('stop-color', 'limegreen');
+
+    gradi.append('stop')
+        .attr('offset', wordPercent)
+        .attr('stop-color', 'limegreen');
+
+    gradi.append('stop')
+        .attr('offset', wordPercent)
+        .attr('stop-color', 'orange');
+
+    gradi.append('stop')
+        .attr('offset', '100%')
+        .attr('stop-color', 'orange');
+}
