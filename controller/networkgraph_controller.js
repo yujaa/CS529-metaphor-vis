@@ -59,6 +59,9 @@ function node_click(d) {
   getSentences(d.id);
   //document.getElementById("zoomed_image").style.visibility = "visible";
   document.getElementById("pos-graph-div").style.visibility = "visible";
+
+  App.selectedNode = d.id;
+  search();
 }
 
 
