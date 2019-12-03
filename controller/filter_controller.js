@@ -9,7 +9,10 @@ function search(){
   d3.json("./model/data/train_graph_data.json", function(error, data) {
     //remember the brush range
     prevBrushRange = App.brushRange; 
-    App.keyword = document.getElementById('search-box').value;
+    if(document.getElementById('search-box').value != "")
+      App.keyword = document.getElementById('search-box').value;
+    else if(App.selectedNode != "")
+      App.keyword = App.selectedNode;
     filter_by_keyword_score(data, App.keyword, 0, 2.5);
     //Show all scores
     brushAdjust(0, 2.5);
