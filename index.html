@@ -19,6 +19,7 @@ text {
 <head>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="./model/styles.css">
+	<title>Metaphor Visualization</title>
 </head>
 <body>
 	<div id="top">
@@ -27,41 +28,10 @@ text {
 	<div id="first-row" style="display:flex">
 		<div class="view" id="net-graph-div"></div>
 
-		<div class="view" id="fiter-div">
-		  <div class="search-container">
-		      <input style="font-size:90%;" type="text" placeholder="Search.." name="search" id="search-box">
-		      <button style="font-size:90%; visibility:hidden;" type="submit" onclick="clear_search()" id="clear-button"> <i class="fa fa-close"></i></button>
-		      <button style="font-size:90%;" type="submit" onclick="search()" id="search-button"><i class="fa fa-search"></i></button>
-		  </div>
+		<div class="view" id="net-zoomed-div">
 
-		  <div style="display:block; margin: 30px 10px; font-weight: bold"id="charts">
-			<div id="hour-chart" class="chart">
-			  <p>Score Histogram</p>
-			</div>
-			<div id="lists">
-			  <div id="flight-list" class="list"></div>
-			</div>
-	      </div>
 
-	      <div id="pos-filter">
-	      	<p style=" margin: 10px; font-weight: bold;">POS Filtering</p>
-	      	<p style=" margin: 10px; font-weight: bold;">WORD</p>
-		      	<div style="display:inline-flex;">
-			      	<input class="pos-option-w" type="checkbox" id="noun-w" value="noun" onclick="checkbox()" checked>Noun<br>
-					<input class="pos-option-w" type="checkbox" id="verb-w" value="verb" onclick="checkbox() " checked>Verb<br>
-					<input class="pos-option-w" type="checkbox" id="adjective-w" value="adjective" onclick="checkbox()" checked>Adjective<br>
-					<input class="pos-option-w" type="checkbox" id="adverb-w" value="adverb" onclick="checkbox()" checked>Adverb<br>
-				</div>
-			<p style=" margin: 10px; font-weight: bold;">METAPHOR</p>	
-			<div style="display:inline-flex;">
-		      	<input class="pos-option-m" type="checkbox" id="noun-m" value="noun" onclick="checkbox()" checked>Noun<br>
-				<input class="pos-option-m" type="checkbox" id="verb-m" value="verb" onclick="checkbox() " checked>Verb<br>
-				<input class="pos-option-m" type="checkbox" id="adjective-m" value="adjective" onclick="checkbox()" checked>Adjective<br>
-				<input class="pos-option-m" type="checkbox" id="adverb-m" value="adverb" onclick="checkbox()" checked>Adverb<br>
-			</div>
-	      </div>
 
-			<!-- <img id="zoomed_image" src="./zoomed.png" alt="Focus of a node" style="width:350px;height:300px; visibility:hidden;"> -->
 		</div>
 	</div>
 	<div id="second-row" style="display:flex">
@@ -71,7 +41,41 @@ text {
 				<p style="font-size:80%;" id="sentences-list"></p>
 			</div>
 		</div>
-		<div class="view" id="pos-graph-div" style="visibility:hidden;">
+		<div class="view" id="fiter-div">
+				<div class="search-container">
+					<input style="font-size:90%;" type="text" placeholder="Search.." name="search" id="search-box">
+					<button style="font-size:90%; visibility:hidden;" type="submit" onclick="clear_search()" id="clear-button"> <i class="fa fa-close"></i></button>
+					<button style="font-size:90%;" type="submit" onclick="search()" id="search-button"><i class="fa fa-search"></i></button>
+				</div>
+	  
+				<div style="display:block; margin: 30px 10px; font-weight: bold"id="charts">
+				  <div id="hour-chart" class="chart">
+					<p>Score Histogram</p>
+				  </div>
+				  <div id="lists">
+					<div id="flight-list" class="list"></div>
+				  </div>
+				</div>
+	  
+				<div id="pos-filter">
+					<p style=" margin: 10px; font-weight: bold;">POS Filtering</p>
+					<p style=" margin: 10px; font-weight: bold;">WORD</p>
+						<div style="display:inline-flex;">
+							<input class="pos-option-w" type="checkbox" id="noun-w" value="noun" onclick="checkbox()" checked>Noun<br>
+						  <input class="pos-option-w" type="checkbox" id="verb-w" value="verb" onclick="checkbox() " checked>Verb<br>
+						  <input class="pos-option-w" type="checkbox" id="adjective-w" value="adjective" onclick="checkbox()" checked>Adjective<br>
+						  <input class="pos-option-w" type="checkbox" id="adverb-w" value="adverb" onclick="checkbox()" checked>Adverb<br>
+					  </div>
+				  <p style=" margin: 10px; font-weight: bold;">METAPHOR</p>	
+				  <div style="display:inline-flex;">
+						<input class="pos-option-m" type="checkbox" id="noun-m" value="noun" onclick="checkbox()" checked>Noun<br>
+					  <input class="pos-option-m" type="checkbox" id="verb-m" value="verb" onclick="checkbox() " checked>Verb<br>
+					  <input class="pos-option-m" type="checkbox" id="adjective-m" value="adjective" onclick="checkbox()" checked>Adjective<br>
+					  <input class="pos-option-m" type="checkbox" id="adverb-m" value="adverb" onclick="checkbox()" checked>Adverb<br>
+				  </div>
+				</div>
+	  
+			  </div>
 		</div>
 	</div>
 	

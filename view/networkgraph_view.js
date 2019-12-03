@@ -137,7 +137,6 @@ function draw_graph(data, mode, word, metaphor) {
     .on('click', function (d) {
       //console.log(d.id)
       getSentences(d.id);
-      document.getElementById("pos-graph-div").style.visibility = "visible";
       App.selectedNode = d.id;
       search();
 
