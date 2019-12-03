@@ -23,11 +23,28 @@ async function filter_by_keyword_score(data, keyword, minScore, maxScore){
     //POS Filtering
     let pos_w = getChecked_w();
     let pos_m = getChecked_m();
+    let word = 0,
+        metaphor = 0;
 
-    var filteredLinks = data.links.filter(d=> (d.score >= minScore)&&(d.score <= maxScore)&&
+    var filteredLinks;
+
+
+    if(!Array.isArray(keyword)){
+      filteredLinks = data.links.filter(d=> (d.score >= minScore)&&(d.score <= maxScore)&&
+                                          ((keyword === d.target) || keyword === d.source));
+
+      metaphor = data.links.filter(d=> (d.score >= minScore)&&(d.score <= maxScore)&&(keyword === d.source));
+      metaphor = metaphor.map(d=>d.target);
+      word = data.links.filter(d=> (d.score >= minScore)&&(d.score <= maxScore)&&(keyword === d.target));
+      word = word.map(d=>d.source);
+    }
+    
+    else
+      filteredLinks = data.links.filter(d=> (d.score >= minScore)&&(d.score <= maxScore)&&
                                           ((keyword.includes(d.target) || keyword.includes(d.source))));
 
-    filteredLinks = filteredLinks.filter(d=> (pos_w.includes(d.source_POS) && pos_m.includes(d.target_POS)) );
+
+    filteredLinks = filteredLinks.filter(d=> (pos_w.includes(d.source_POS) && pos_m.includes(d.target_POS)));
 
     var filteredNodes = Object.values(filteredLinks.reduce(function(t,v){
                             if(!t[v.source]){
@@ -44,9 +61,12 @@ async function filter_by_keyword_score(data, keyword, minScore, maxScore){
             nodes: filteredNodes,
             links: filteredLinks
         };
-   
-        
-   draw_graph(filteredGraph);
+    
+    if(!Array.isArray(keyword)){   
+      draw_graph(filteredGraph,1, word, metaphor);
+    }
+    else
+      draw_graph(filteredGraph,0, 0, 0);
   });
   
 }
