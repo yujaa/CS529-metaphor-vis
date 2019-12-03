@@ -20,8 +20,8 @@ function getSentences(word){
         var newNode = document.createElement('p');
         console.log(wordArr[d]);
         //highlight words
-        sentenceArr[d] = sentenceArr[d].replace(" "+wordArr[d], "<text style='color:limegreen; font-size:18px'>"+" "+wordArr[d]+"</text>");
-        sentenceArr[d] = sentenceArr[d].replace(" "+metaphorArr[d], "<text style='color:orange; font-size:18px'>"+" "+metaphorArr[d]+"</text>");
+        sentenceArr[d] = sentenceArr[d].replace(" "+wordArr[d], "<text style='color:white; background-color: limegreen; font-size:14px'>"+" "+wordArr[d]+"</text>");
+        sentenceArr[d] = sentenceArr[d].replace(" "+metaphorArr[d], "<text style='color:white; background-color: orange; font-size:14px'>"+" "+metaphorArr[d]+"</text>");
         console.log(sentenceArr[d]);
         newNode.innerHTML="* " + sentenceArr[d];
 
