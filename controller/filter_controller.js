@@ -13,9 +13,13 @@ function search(){
       App.keyword = document.getElementById('search-box').value;
     else if(App.selectedNode != "")
       App.keyword = App.selectedNode;
+
+    //show detailed view 
+    //draw_detailed_graph(data, App.keyword);
+
     filter_by_keyword_score(data, App.keyword, 0, 2.5);
     //Show all scores
-    brushAdjust(0, 2.5);
+    //brushAdjust(0, 2.5);
 
     //search box 
     document.getElementById("search-box").readOnly = true;

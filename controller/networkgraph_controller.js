@@ -85,7 +85,7 @@ function fade(opacity) {
 
   };
 
-  console.log(d.id)
+  //console.log(d.id)
 }
 
 //called to zoom

@@ -63,7 +63,8 @@ async function filter_by_keyword_score(data, keyword, minScore, maxScore){
         };
     
     if(!Array.isArray(keyword)){   
-      draw_graph(filteredGraph,1, word, metaphor);
+      //draw_graph(filteredGraph,1, word, metaphor);
+      draw_detailed_graph(filteredGraph, 1, word, metaphor);
     }
     else
       draw_graph(filteredGraph,0, 0, 0);

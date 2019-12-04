@@ -19,7 +19,7 @@ var svg = App.svg;
 
 
 //add legend
-svg.append("circle").attr("cx", 20).attr("cy", 50).attr("r", 6).style("fill", "limegreen")
+svg.append("circle").attr("cx", 20).attr("cy", 50).attr("r", 6).style("fill", "blue")
 svg.append("circle").attr("cx", 20).attr("cy", 75).attr("r", 6).style("fill", "orchid")
 svg.append("circle").attr("cx", 20).attr("cy", 100).attr("r", 6).style("fill", "orange")
 svg.append("text").attr("x", 35).attr("y", 50).text("word").style("font-size", "12px").attr("alignment-baseline", "middle")
@@ -33,7 +33,7 @@ var g = svg.append("g")
 //set color for each node type
 var color = d3.scaleOrdinal()
   .domain(["w", "b", "m"])
-  .range(["limegreen", "orchid", "orange"]);
+  .range(["blue", "orchid", "orange"]);
 
 
 //set font size of the text
@@ -62,15 +62,15 @@ var simulation = d3.forceSimulation()
   .force("link",
     d3.forceLink().id(function (d) { return d.id; })
        .distance(function (d) { return radius(d.source.freq * 1.9) + radius(d.target.freq * 1.9); }) //distance among nodes that are connected
-      // .strength(function (d) { return 0.09; }) //how zoomed it is
+       //.strength(function (d) { return 0.09; }) //how zoomed it is
   )
   .force("charge", 
           d3
           .forceManyBody()
-          .strength(-10)
-          .distanceMax(width/4, height/4))
+          .strength(-2)
+          .distanceMax(width/3, height/3))
         
-  // .force("collide", d3.forceCollide(30).strength(1).iterations(1))
+  .force("collide", d3.forceCollide(20).strength(1).iterations(10))
   //.force('x', d3.forceX(width / 2).strength(0.5))
   .force('center', d3.forceCenter(width/2, height/2))
   .force('y', d3.forceY(height / 2).strength(0.03));
