@@ -164,7 +164,13 @@ function draw_graph(data, mode, word, metaphor) {
 
   //add zoom capabilities 
   var zoom_handler = d3.zoom()
-    .on("zoom", zoom_actions);
+  .scaleExtent([1 / 2, 10])
+    .on("zoom", function() {
+              translate = d3.event.translate;
+              scale = d3.event.scale;
+              k = d3.event.transform.k;
+              zoom_actions();
+});
 
   zoom_handler(svg);
 
@@ -176,11 +182,13 @@ function draw_graph(data, mode, word, metaphor) {
     g.attr("transform", transform.toString())
     d3.selectAll('.node-text')
       .style('font-size', d => font_size(d.freq) / transform.k)
-      .style("stroke-width", function (d) { return font_size(d.freq) * .015 / transform.k; })
+      .style("stroke-width", function (d) { return font_size(d.freq)*.015/transform.k;})
 
       .style('opacity', d => {
         return font_size(d.freq) * transform.k < 18 ? 0 : 1;
       })
+  /*  svg.selectAll(".legend")
+             .attr("transform",transform.toString())*/
 
 
 
@@ -627,7 +635,14 @@ function draw_detailed_graph(data, mode, word, metaphor) {
 
   //add zoom capabilities 
   var zoom_handler = d3.zoom()
-    .on("zoom", zoom_actions);
+    .scaleExtent([1 / 3, 12])
+    .scaleExtent([1 / 2, 10])
+    .on("zoom", function() {
+              translate = d3.event.translate;
+              scale = d3.event.scale;
+              k = d3.event.transform.k;
+              zoom_actions();
+});
 
   zoom_handler(svg);
 
