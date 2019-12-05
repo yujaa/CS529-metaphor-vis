@@ -28,19 +28,19 @@ async function filter_by_keyword_score(data, keyword, minScore, maxScore) {
 
     var filteredLinks;
 
-    let score_filtered =  data.links.filter(d => (d.score >= minScore) && (d.score <= maxScore));
+    //let score_filtered =  data.links.filter(d => (d.score >= minScore) && (d.score <= maxScore));
     if (!Array.isArray(keyword)) {
       
-      filteredLinks = score_filtered.filter(d =>((keyword === d.target) || keyword === d.source));
+      filteredLinks = data.links.filter(d =>(((d.score >= minScore) && (d.score <= maxScore))&&(keyword === d.target) || keyword === d.source));
 
-      metaphor = score_filtered.filter(d => keyword === d.source);
+      metaphor = data.links.filter(d => ((d.score >= minScore) && (d.score <= maxScore))&&(keyword === d.source));
       metaphor = metaphor.map(d => d.target);
-      word = score_filtered.filter(d => keyword === d.target);
+      word = data.links.filter(d => ((d.score >= minScore) && (d.score <= maxScore))&&(keyword === d.target));
       word = word.map(d => d.source);
     }
 
     else
-      filteredLinks = score_filtered.filter(d => ((keyword.includes(d.target) || keyword.includes(d.source))));
+      filteredLinks = data.links.filter(d => ((d.score >= minScore) && (d.score <= maxScore))&& ((keyword.includes(d.target) || keyword.includes(d.source))));
 
 
     filteredLinks = filteredLinks.filter(d => (pos_w.includes(d.source_POS) && pos_m.includes(d.target_POS)));

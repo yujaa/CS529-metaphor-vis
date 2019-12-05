@@ -30,7 +30,7 @@ function getSentences(word){
         //Adding color to POS Tags
         if (wordPos_Arr[d] == "Noun")
         {
-            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:LimeGreen;'>[Noun]</sub>"
+            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:Green;'>[Noun]</sub>"
         }
         else if (wordPos_Arr[d] == "Verb")
         {
@@ -46,7 +46,7 @@ function getSentences(word){
         }
         if (metaphorPos_Arr[d] == "Noun")
         {
-            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:LimeGreen;'>[Noun]</sub>"
+            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:Green;'>[Noun]</sub>"
         }
         else if (metaphorPos_Arr[d] == "Verb")
         {
@@ -108,7 +108,7 @@ function getSentences2(word, word2){
         //Adding color to POS Tags
         if (wordPos_Arr[d] == "Noun")
         {
-            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:LimeGreen;'>[Noun]</sub>"
+            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:Green;'>[Noun]</sub>"
         }
         else if (wordPos_Arr[d] == "Verb")
         {
@@ -124,7 +124,7 @@ function getSentences2(word, word2){
         }
         if (metaphorPos_Arr[d] == "Noun")
         {
-            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:LimeGreen;'>[Noun]</sub>"
+            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:Green;'>[Noun]</sub>"
         }
         else if (metaphorPos_Arr[d] == "Verb")
         {
