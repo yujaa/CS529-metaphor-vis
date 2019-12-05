@@ -2,6 +2,7 @@ var App = App || {};
 
 var width = document.getElementById("net-graph-div").getBoundingClientRect().width;
 var height = 600;
+var simulation;
 
 //load data
 function draw_graph(data, mode, word, metaphor) {
@@ -135,27 +136,23 @@ function draw_graph(data, mode, word, metaphor) {
     .text(function (d) { return d.id; })
 
 
-
-  //on simulation, load ticks to adjust positions
-  var simulation;
-
   //the simulation that controls the layout
-var simulation = d3.forceSimulation()
-.force("link",
-  d3.forceLink().id(function (d) { return d.id; })
-     .distance(function (d) { return radius(d.source.freq * 1.9) + radius(d.target.freq * 1.9); }) //distance among nodes that are connected
-     //.strength(function (d) { return 0.09; }) //how zoomed it is
-)
-.force("charge", 
-        d3
+  simulation = d3.forceSimulation()
+    .force("link",
+      d3.forceLink().id(function (d) { return d.id; })
+        .distance(function (d) { return radius(d.source.freq * 1.9) + radius(d.target.freq * 1.9); }) //distance among nodes that are connected
+      //.strength(function (d) { return 0.09; }) //how zoomed it is
+    )
+    .force("charge",
+      d3
         .forceManyBody()
         .strength(-2)
-        .distanceMax(width/3, height/3))
-      
-.force("collide", d3.forceCollide(20).strength(1).iterations(10))
-//.force('x', d3.forceX(width / 2).strength(0.5))
-.force('center', d3.forceCenter())
-.force('y', d3.forceY(height / 2).strength(0.03));
+        .distanceMax(width / 3, height / 3))
+
+    .force("collide", d3.forceCollide(20).strength(1).iterations(10))
+    //.force('x', d3.forceX(width / 2).strength(0.5))
+    .force('center', d3.forceCenter(width*2.5, height))
+    .force('y', d3.forceY(height / 2).strength(0.03));
 
   simulation
     .nodes(graph.nodes)
@@ -237,17 +234,17 @@ var simulation = d3.forceSimulation()
       p2 = d.y;
       d.fx = d.x;
       d.fy = d.y;
-    
+
     }
-    
+
     function dragged(d) {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
     }
-    
+
     function dragended(d) {
       if (!d3.event.active) simulation.alphaTarget(0);
-    
+
       d.fx = null;
       d.fy = null;
     }
@@ -280,13 +277,8 @@ var simulation = d3.forceSimulation()
       })
 
       link.style('stroke-opacity', o => (o.source === d || o.target === d ? 1 : opacity));
-      //    edgelabels.style('fill-opacity', o => (o.source === d || o.target === d ? 1 : opacity));
-      //   edgepaths.style('fill-opacity', o => (o.source === d || o.target === d ? 1 : opacity));
-      //     textlink.style('fill-opacity', o => (o.source === d || o.target === d ? 1 : opacity));
 
     };
-
-    //console.log(d.id)
   }
 
   function show_novelty(opacity) {
@@ -388,7 +380,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     width = document.getElementById("net-detailed-div").getBoundingClientRect().width,
     height = document.getElementById("net-detailed-div").getBoundingClientRect().height;
 
-    var posPosition = {"Noun":{x:0, y:0}, "Verb":{x:width, y:0}, "Adverb":{x:0, y:height}, "Adjective":{x:width, y:height}};
+  var posPosition = { "Noun": { x: 0, y: 0 }, "Verb": { x: width, y: 0 }, "Adverb": { x: 0, y: height }, "Adjective": { x: width, y: height } };
 
   var posDict = {};
 
@@ -399,18 +391,18 @@ function draw_detailed_graph(data, mode, word, metaphor) {
       posDict[d.source] = d.source_POS;
   });
 
-  var forceX = d3.forceX(function (d) { return posPosition[posDict[d.id]] ? posPosition[posDict[d.id]].x : 250})
+  var forceX = d3.forceX(function (d) { return posPosition[posDict[d.id]] ? posPosition[posDict[d.id]].x : 250 })
     .strength(0.05)
 
-  var forceY = d3.forceY(function (d) {return posPosition[posDict[d.id]] ? posPosition[posDict[d.id]].y : 250})
-      .strength(0.05)
+  var forceY = d3.forceY(function (d) { return posPosition[posDict[d.id]] ? posPosition[posDict[d.id]].y : 250 })
+    .strength(0.05)
 
   d3.select("#net-detailed-div").selectAll("*").remove();
 
   let svg = d3.select("#net-detailed-div").append('svg')
     .attr("width", width)
     .attr("height", height);
-    
+
 
   let color = d3.scaleOrdinal(d3.schemeCategory20),
     valueline = d3.line()
@@ -441,7 +433,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force("x", forceX)
       .force("y", forceY);
-      //.force('y', d3.forceY(height / 2).strength(0.03));
+  //.force('y', d3.forceY(height / 2).strength(0.03));
 
 
 
@@ -658,7 +650,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     .append('g')
     .attr('class', 'path_placeholder')
     .append('path')
-    .attr('class','group-path')
+    .attr('class', 'group-path')
     .attr('stroke', function (d) { return color(d); })
     .attr('fill', function (d) { return color(d); })
     .attr('opacity', 0);
@@ -720,7 +712,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     });
 
     updateGroups();
-    
+
   }
 
 

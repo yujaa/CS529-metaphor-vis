@@ -2,10 +2,14 @@ body {
   background: #cfd8dc;
   display:flex;
   flex-direction:column;
-
+  font-family: 'Barlow', sans-serif;
   align-items: stretch;
 }
 
+svg{
+  display:block;
+  margin:auto;
+}
 
 /* The container3 */
 .container3 {
@@ -306,10 +310,16 @@ body {
 }
 
 
-#net-graph-div{
-  flex:3;
+#first-left-div{
+  display:flex; 
+  flex-direction:row;
+  flex:4;
 }
 
+#filter-div{
+  margin:10px;
+
+}
 
 #net-detailed-div{
   flex: 1;
@@ -328,9 +338,7 @@ body {
   flex:3;
 }
 
-#filter-div{
-  flex:1;
-}
+
 
 .view{
   margin: 5px;
@@ -370,13 +378,15 @@ text {
 
 .search-container {
   float: right;
+  padding:10px;
 }
 input[type=text] {
   padding: 6px;
+  font-family: 'Barlow', sans-serif;
   margin-top: 8px;
-  font-size: 17px;
+  font-size: 20px;
   border: none;
-  background: #eeeeee;
+  background: #dedede;
 }
 
 .search-container button {
@@ -396,27 +406,23 @@ input[type=text] {
   
 
 #charts {
-  padding: 10px 0;
+  font-family: 'Barlow', sans-serif;
+  padding: 15px;
 }
 
 .chart {
   display: block;
-  height: 151px;
+  height: 160px;
   margin-bottom: 20px;
 }
 
-.reset {
-  padding-left: 1em;
-  font-size: smaller;
-  color: #ccc;
-}
 
 .background.bar {
   fill: #ccc;
 }
 
 .foreground.bar {
-  fill: steelblue;
+  fill: #ffc0cb;
 }
 
 .axis path, .axis line {
@@ -426,12 +432,12 @@ input[type=text] {
 }
 
 .axis text {
-  font: 10px sans-serif;
+  font: 12px sans-serif;
 }
 
 .brush rect.selection {
-  fill: steelblue;
-  fill-opacity: .125;
+  fill: #ffc0cb;
+  fill-opacity: .425;
 }
 
 .brush-handle {

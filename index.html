@@ -1,38 +1,117 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
-}
-.nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-text {
-  font-family: sans-serif;
-  font-size: 10px;
-}
-input.small {
-      width: 5px;
-      height: 5px;
-      }
+	.links line {
+		stroke: #999;
+		stroke-opacity: 0.6;
+	}
 
+	.nodes circle {
+		stroke: #fff;
+		stroke-width: 1.5px;
+	}
+
+	text {
+		font-family: sans-serif;
+		font-size: 10px;
+	}
+
+	input.small {
+		width: 5px;
+		height: 5px;
+	}
 </style>
 <!DOCTYPE html>
 <meta charset="utf-8">
+
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="./model/styles.css">
 	<title>Metaphor Visualization</title>
 </head>
+
 <body>
 	<div id="top">
 		Exploring the Novelty of Metaphor through visualization
 	</div>
 	<div id="first-row" style="display:flex">
-		<div class="view" id="net-graph-div"></div>
-		<div class="view" id="net-detailed-div">
+		<div class="view" id="first-left-div">
+			<div id="net-graph-div" style="flex:7;"></div>
+			<div id="fiter-div" style="flex:1">
+				<div id="pos-filter">
+					<p style=" text-align: center; font-size: 20px; font-weight: bolder;">PART OF SPEECH</p>
+					<p style=" text-align: center; font-size: 15px; font-weight: bold;">WORD</p>
+					<div style="display:block; padding-left: 20px">
+						<label class="container">Noun
+							<input class="pos-option-w small" type="checkbox" id="noun-w" value="noun"
+								onclick="checkbox()" checked>
+							<span class="checkmark"></span>
+						</label>
+						<label class="container1">Verb
+							<input class="pos-option-w" type="checkbox" id="verb-w" value="verb" onclick="checkbox() "
+								checked>
+							<span class="checkmark"></span>
+						</label>
+						<label class="container2">Adjective
+							<input class="pos-option-w" type="checkbox" id="adjective-w" value="adjective"
+								onclick="checkbox()" checked>
+							<span class="checkmark"></span>
+						</label>
+						<label class="container3">Adverb
+							<input class="pos-option-w" type="checkbox" id="adverb-w" value="adverb"
+								onclick="checkbox()" checked>
+							<span class="checkmark"></span>
+						</label>
+					</div>
+					<p style=" text-align: center; font-size: 15px; font-weight: bold; margin-top:40px">METAPHOR</p>
+					<div style="display:block; padding-left: 20px">
+						<label class="container">Noun
+							<input class="pos-option-m" type="checkbox" id="noun-m" value="noun" onclick="checkbox()"
+								checked>
+							<span class="checkmark"></span>
+						</label>
+						<label class="container1">Verb
+							<input class="pos-option-m" type="checkbox" id="verb-m" value="verb" onclick="checkbox() "
+								checked>
+							<span class="checkmark"></span>
+						</label>
+						<label class="container2">Adjective
+							<input class="pos-option-m" type="checkbox" id="adjective-m" value="adjective"
+								onclick="checkbox()" checked>
+							<span class="checkmark"></span>
+						</label>
+						<label class="container3">Adverb
+							<input class="pos-option-m" type="checkbox" id="adverb-m" value="adverb"
+								onclick="checkbox()" checked>
+							<span class="checkmark"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="display:flex; flex-direction:column; flex-wrap: wrap; flex:1">
+
+			<div class="view" style="display:flex; flex-direction:column">
+				<div class="search-container" style="display:flex; flex-direction:row">
+					<input style="font-size:90%; flex:6;" type="text" placeholder="Search.." name="search" id="search-box">
+					<button style="font-size:90%; flex:1; visibility:hidden;" type="submit" onclick="clear_search()"
+						id="clear-button"> <i class="fa fa-close"></i></button>
+					<button style="font-size:90%;" type="submit" onclick="search()" id="search-button"><i
+							class="fa fa-search"></i></button>
+				</div>
+				<div id="charts" style="display:block">
+					<div id="hour-chart" class="chart">
+						<div style=" text-align: center; font-size: 20px; font-weight:600;">NOVELTY SCORE RANGE</div>
+					</div>
+					<div id="lists">
+						<div id="flight-list" class="list"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="view" id="net-detailed-div">
+			</div>
 		</div>
 	</div>
 	<div id="second-row" style="display:flex">
@@ -42,68 +121,10 @@ input.small {
 				<p style="font-size:80%; padding: 10px 20px;" id="sentences-list"></p>
 			</div>
 		</div>
-		<div class="view" id="fiter-div">
-				<div class="search-container">
-					<input style="font-size:90%;" type="text" placeholder="Search.." name="search" id="search-box">
-					<button style="font-size:90%; visibility:hidden;" type="submit" onclick="clear_search()" id="clear-button"> <i class="fa fa-close"></i></button>
-					<button style="font-size:90%;" type="submit" onclick="search()" id="search-button"><i class="fa fa-search"></i></button>
-				</div>
-	  
-				<div style="display:block; margin: 30px 10px; font-weight: bold"id="charts">
-				  <div id="hour-chart" class="chart">
-					<p>Novelty Score Histogram - Range</p>
-				  </div>
-				  <div id="lists">
-					<div id="flight-list" class="list"></div>
-				  </div>
-				</div>
-	  
-				<div id="pos-filter">
-					<p style=" margin: 10px; font-weight: bold;">Parts of speech - Filtering</p>
-					<p style=" margin: 10px; font-weight: bold;">WORD</p>
-						<div style="display:inline-flex;">
-							<label class="container">Noun
-							  <input class="pos-option-w small" type="checkbox" id="noun-w" value="noun" onclick="checkbox()" checked>
-							  <span class="checkmark"></span>
-							</label>
-							<label class="container1">Verb
-							  <input class="pos-option-w" type="checkbox" id="verb-w" value="verb" onclick="checkbox() " checked>
-							  <span class="checkmark"></span>
-							</label>
-							<label class="container2">Adjective
-							  <input class="pos-option-w" type="checkbox" id="adjective-w" value="adjective" onclick="checkbox()" checked>
-							  <span class="checkmark"></span>
-							</label>
-							<label class="container3">Adverb
-							  <input class="pos-option-w" type="checkbox" id="adverb-w" value="adverb" onclick="checkbox()" checked>
-							  <span class="checkmark"></span>
-							</label>
-					  </div>
-				  <p style=" margin: 10px; font-weight: bold;">METAPHOR</p>	
-				  <div style="display:inline-flex;">
-							<label class="container">Noun
-							  <input class="pos-option-m" type="checkbox" id="noun-m" value="noun" onclick="checkbox()" checked>
-							  <span class="checkmark"></span>
-							</label>
-							<label class="container1">Verb
-							  <input class="pos-option-m" type="checkbox" id="verb-m" value="verb" onclick="checkbox() " checked>
-							  <span class="checkmark"></span>
-							</label>
-							<label class="container2">Adjective
-							  <input class="pos-option-m" type="checkbox" id="adjective-m" value="adjective" onclick="checkbox()" checked>
-							  <span class="checkmark"></span>
-							</label>
-							<label class="container3">Adverb
-							  <input class="pos-option-m" type="checkbox" id="adverb-m" value="adverb" onclick="checkbox()" checked>
-							  <span class="checkmark"></span>
-							</label>
-					  </div>
-				</div>
-	  
-			  </div>
-		</div>
+
 	</div>
-	
+	</div>
+
 </body>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
