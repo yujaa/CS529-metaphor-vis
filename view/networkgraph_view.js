@@ -11,8 +11,9 @@ function draw_graph(data, mode, word, metaphor) {
     .enter()
     .append("line")
     .attr("class", "links")
-    .attr("stroke-width", function (d) {
-      return d.score * 4;
+    .attr("stroke-width", function (d) { 
+      
+      return d.score;
     });
 
   link.append("title")
@@ -120,9 +121,11 @@ function draw_graph(data, mode, word, metaphor) {
     .enter()
     .append("text")
     .attr('class', 'node-text')
-    .attr("dy", "1.3em")
+    .attr("dy", ".4em")
     .attr("text-anchor", "middle")
     .style("font-size", function (d) { return font_size(d.freq); })
+    .style("font-weight", 900 )
+    .style("stroke-width", function (d) { return font_size(d.freq)*.015;})
     .style("opacity", d => {
       return font_size(d.freq) < 18 ? 0 : 1;
     })
@@ -152,6 +155,8 @@ function draw_graph(data, mode, word, metaphor) {
     g.attr("transform", transform.toString())
     d3.selectAll('.node-text')
       .style('font-size', d => font_size(d.freq) / transform.k)
+      .style("stroke-width", function (d) { return font_size(d.freq)*.015/transform.k;})
+
       .style('opacity', d => {
         return font_size(d.freq) * transform.k < 18 ? 0 : 1;
       })
@@ -318,11 +323,11 @@ function gradient(el, wordPercent, i) {
 
   gradi.append('stop')
     .attr('offset', wordPercent)
-    .attr('stop-color', 'blue');
+    .attr('stop-color', 'skyblue');
 
   gradi.append('stop')
     .attr('offset', '100%')
-    .attr('stop-color', 'blue');
+    .attr('stop-color', 'skyblue');
 }
 
 
@@ -479,7 +484,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
           var totalLinks = d.freq;
           var wordPercent = (word.length / totalLinks) * 100;
           if (word.length === 0) {
-            return 'blue';
+            return 'skyblue';
           }
           else if (metaphor.length === 0) {
             return 'orange';
@@ -490,7 +495,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
             gradient(grad1, wordPercent + "%", (rand));
             return 'url(#gradient' + (rand) + ')';
           }
-
+  
         }
         else {
           //color metaphor and word nodes
@@ -499,7 +504,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
           if (metaphor.includes(d.id))
             return 'orange';
           if (word.includes(d.id))
-            return 'blue';
+            return 'skyblue';
         }
       }
       else
@@ -536,9 +541,11 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     .enter()
     .append("text")
     .attr('class', 'zoomed-node-text')
-    .attr("dy", "1.3em")
+    .attr("dy", ".5em")
     .attr("text-anchor", "middle")
     .style("font-size", function (d) { return font_size(d.freq); })
+      .style("font-weight", 900 )
+     .style("stroke-width", function (d) { return font_size(d.freq)*.015;})
     .style("opacity", d => {
       return font_size(d.freq) < 18 ? 0 : 1;
     })
@@ -567,6 +574,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     g.attr("transform", transform.toString())
     d3.selectAll('.zoomed-node-text')
       .style('font-size', d => font_size(d.freq) / transform.k)
+      .style("stroke-width", function (d) { return font_size(d.freq)*.015/transform.k;})  
       .style('opacity', d => {
         return font_size(d.freq) * transform.k < 18 ? 0 : 1;
       })
