@@ -57,24 +57,6 @@ const forceX = d3.forceX(width / 2).strength(0.25)
 const forceY = d3.forceY(height / 2).strength(0.25)
 
 
-//the simulation that controls the layout
-var simulation = d3.forceSimulation()
-  .force("link",
-    d3.forceLink().id(function (d) { return d.id; })
-       .distance(function (d) { return radius(d.source.freq * 1.9) + radius(d.target.freq * 1.9); }) //distance among nodes that are connected
-       //.strength(function (d) { return 0.09; }) //how zoomed it is
-  )
-  .force("charge", 
-          d3
-          .forceManyBody()
-          .strength(-2)
-          .distanceMax(width/3, height/3))
-        
-  .force("collide", d3.forceCollide(20).strength(1).iterations(10))
-  //.force('x', d3.forceX(width / 2).strength(0.5))
-  .force('center', d3.forceCenter(width/2, height/2))
-  .force('y', d3.forceY(height / 2).strength(0.03));
-
 
 //legend
 var legend = svg.append("g")

@@ -1,5 +1,8 @@
 var App = App || {};
 
+var width = document.getElementById("net-graph-div").getBoundingClientRect().width;
+var height = 600;
+
 //load data
 function draw_graph(data, mode, word, metaphor) {
   graph = data;
@@ -11,8 +14,8 @@ function draw_graph(data, mode, word, metaphor) {
     .enter()
     .append("line")
     .attr("class", "links")
-    .attr("stroke-width", function (d) { 
-      
+    .attr("stroke-width", function (d) {
+
       return d.score;
     });
 
@@ -124,8 +127,8 @@ function draw_graph(data, mode, word, metaphor) {
     .attr("dy", ".4em")
     .attr("text-anchor", "middle")
     .style("font-size", function (d) { return font_size(d.freq); })
-    .style("font-weight", 900 )
-    .style("stroke-width", function (d) { return font_size(d.freq)*.015;})
+    .style("font-weight", 900)
+    .style("stroke-width", function (d) { return font_size(d.freq) * .015; })
     .style("opacity", d => {
       return font_size(d.freq) < 18 ? 0 : 1;
     })
@@ -134,6 +137,26 @@ function draw_graph(data, mode, word, metaphor) {
 
 
   //on simulation, load ticks to adjust positions
+  var simulation;
+
+  //the simulation that controls the layout
+var simulation = d3.forceSimulation()
+.force("link",
+  d3.forceLink().id(function (d) { return d.id; })
+     .distance(function (d) { return radius(d.source.freq * 1.9) + radius(d.target.freq * 1.9); }) //distance among nodes that are connected
+     //.strength(function (d) { return 0.09; }) //how zoomed it is
+)
+.force("charge", 
+        d3
+        .forceManyBody()
+        .strength(-2)
+        .distanceMax(width/3, height/3))
+      
+.force("collide", d3.forceCollide(20).strength(1).iterations(10))
+//.force('x', d3.forceX(width / 2).strength(0.5))
+.force('center', d3.forceCenter())
+.force('y', d3.forceY(height / 2).strength(0.03));
+
   simulation
     .nodes(graph.nodes)
     .on("tick", ticked);
@@ -155,7 +178,7 @@ function draw_graph(data, mode, word, metaphor) {
     g.attr("transform", transform.toString())
     d3.selectAll('.node-text')
       .style('font-size', d => font_size(d.freq) / transform.k)
-      .style("stroke-width", function (d) { return font_size(d.freq)*.015/transform.k;})
+      .style("stroke-width", function (d) { return font_size(d.freq) * .015 / transform.k; })
 
       .style('opacity', d => {
         return font_size(d.freq) * transform.k < 18 ? 0 : 1;
@@ -207,6 +230,28 @@ function draw_graph(data, mode, word, metaphor) {
         return 'rotate(0)';
       }
     });
+
+    function dragstarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(0.5).restart();
+      p1 = d.x;
+      p2 = d.y;
+      d.fx = d.x;
+      d.fy = d.y;
+    
+    }
+    
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+    
+    function dragended(d) {
+      if (!d3.event.active) simulation.alphaTarget(0);
+    
+      d.fx = null;
+      d.fy = null;
+    }
+
   }
 
   //starting from here to line 170 are for checking the neighbours(level-1) of a highlighted node 
@@ -334,6 +379,7 @@ function gradient(el, wordPercent, i) {
 //detailed graph
 function draw_detailed_graph(data, mode, word, metaphor) {
 
+
   //set size of nodes based on the frequencies
   var radius = d3.scaleSqrt()
     .range([0, 6]);
@@ -342,15 +388,29 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     width = document.getElementById("net-detailed-div").getBoundingClientRect().width,
     height = document.getElementById("net-detailed-div").getBoundingClientRect().height;
 
-  //constants to set gravity 
-  let forceX = d3.forceX(width / 2).strength(0.25);
-  let forceY = d3.forceY(height / 2).strength(0.25);
+    var posPosition = {"Noun":{x:0, y:0}, "Verb":{x:width, y:0}, "Adverb":{x:0, y:height}, "Adjective":{x:width, y:height}};
+
+  var posDict = {};
+
+  graph.links.forEach(function (d) {
+    if (d.source == App.selectedNode)
+      posDict[d.target] = d.target_POS;
+    else if (d.target == App.selectedNode)
+      posDict[d.source] = d.source_POS;
+  });
+
+  var forceX = d3.forceX(function (d) { return posPosition[posDict[d.id]] ? posPosition[posDict[d.id]].x : 250})
+    .strength(0.05)
+
+  var forceY = d3.forceY(function (d) {return posPosition[posDict[d.id]] ? posPosition[posDict[d.id]].y : 250})
+      .strength(0.05)
 
   d3.select("#net-detailed-div").selectAll("*").remove();
 
   let svg = d3.select("#net-detailed-div").append('svg')
     .attr("width", width)
     .attr("height", height);
+    
 
   let color = d3.scaleOrdinal(d3.schemeCategory20),
     valueline = d3.line()
@@ -360,7 +420,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     paths,
     groups,
     groupIds,
-    scaleFactor = 1.2,
+    scaleFactor = 1.5,
     polygon,
     centroid,
     node,
@@ -368,28 +428,28 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     simulation = d3.forceSimulation()
       .force("link",
         d3.forceLink().id(function (d) { return d.id; })
-          .distance(function (d) { return radius(d.source.freq * 1.9) + radius(d.target.freq * 1.9); }) //distance among nodes that are connected
+          .distance(function (d) { return radius(d.source.freq * 2.5) + radius(d.target.freq * 2.5); }) //distance among nodes that are connected
         // .strength(function (d) { return 0.09; }) //how zoomed it is
       )
       .force("charge",
         d3
           .forceManyBody()
-          .strength(-10)
-          .distanceMax(width / 4, height / 4))
+          .strength(-90)
+          .distanceMax(width / 3, height / 3))
 
-      // .force("collide", d3.forceCollide(100).strength(1).iterations(5))
       //.force('x', d3.forceX(width / 2).strength(0.5))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('y', d3.forceY(height / 2).strength(0.03));
+      .force("x", forceX)
+      .force("y", forceY);
+      //.force('y', d3.forceY(height / 2).strength(0.03));
 
 
 
   // create groups, links and nodes
 
+  groups = svg.append('g').attr('class', 'groups');
+
   let g = svg.append('g');
-
-  groups = g.attr('class', 'groups');
-
 
   link = g.selectAll(".link")
     .data(graph.links)
@@ -403,29 +463,29 @@ function draw_detailed_graph(data, mode, word, metaphor) {
   link.append("title")
     .text(function (d) { return d.score });
 
-  edgepaths = g.selectAll(".edgepath")
+  edgepaths_d = g.selectAll(".edgepath_d")
     .data(graph.links)
     .enter()
     .append('path')
-    .attr('class', 'edgepath')
+    .attr('class', 'edgepath_d')
     //  .attr('fill-opacity', 1)
     //     .attr('stroke-opacity', 1)
-    .attr('id', function (d, i) { return 'edgepath' + i })
+    .attr('id', function (d, i) { return 'edgepath_d' + i })
   //      .style("pointer-events", "none");
 
-  edgelabels = g.selectAll(".edgelabel")
+  edgelabels_d = g.selectAll(".edgelabel_d")
     .data(graph.links)
     .enter()
     .append('text')
     .style("fill-opacity", 0)
-    .attr('class', 'edgelabel')
-    .attr('id', function (d, i) { return 'edgelabel' + i })
+    .attr('class', 'edgelabel_d')
+    .attr('id', function (d, i) { return 'edgelabel_d' + i })
     .attr('font-size', "5px")
   //    .attr('fill', '#aaa')
 
 
-  textlink = edgelabels.append('textPath')
-    .attr('xlink:href', function (d, i) { return '#edgepath' + i })
+  textlink = edgelabels_d.append('textPath')
+    .attr('xlink:href', function (d, i) { return '#edgepath_d' + i })
     .style("text-anchor", "middle")
     //    .style("pointer-events", "none")
     .attr("startOffset", "50%")
@@ -447,18 +507,6 @@ function draw_detailed_graph(data, mode, word, metaphor) {
       link_mousemove();
     });
 
-
-  // node = svg.append('g')
-  //   .attr('class', 'nodes')
-  //   .selectAll('circle')
-  //   .data(graph.nodes)
-  //   .enter().append('circle')
-  //   .attr('r', 5)
-  //   .attr('fill', function (d) { return color(d.type); })
-  //   .call(d3.drag()
-  //     .on('start', dragstarted)
-  //     .on('drag', dragged)
-  //     .on('end', dragended));
 
   node = g
     .attr("class", "nodes")
@@ -495,12 +543,12 @@ function draw_detailed_graph(data, mode, word, metaphor) {
             gradient(grad1, wordPercent + "%", (rand));
             return 'url(#gradient' + (rand) + ')';
           }
-  
+
         }
         else {
           //color metaphor and word nodes
-          console.log(d.id);
-          console.log(metaphor);
+          //console.log(d.id);
+          //console.log(metaphor);
           if (metaphor.includes(d.id))
             return 'orange';
           if (word.includes(d.id))
@@ -544,8 +592,8 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     .attr("dy", ".5em")
     .attr("text-anchor", "middle")
     .style("font-size", function (d) { return font_size(d.freq); })
-      .style("font-weight", 900 )
-     .style("stroke-width", function (d) { return font_size(d.freq)*.015;})
+    .style("font-weight", 900)
+    .style("stroke-width", function (d) { return font_size(d.freq) * .015; })
     .style("opacity", d => {
       return font_size(d.freq) < 18 ? 0 : 1;
     })
@@ -574,7 +622,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     g.attr("transform", transform.toString())
     d3.selectAll('.zoomed-node-text')
       .style('font-size', d => font_size(d.freq) / transform.k)
-      .style("stroke-width", function (d) { return font_size(d.freq)*.015/transform.k;})  
+      .style("stroke-width", function (d) { return font_size(d.freq) * .015 / transform.k; })
       .style('opacity', d => {
         return font_size(d.freq) * transform.k < 18 ? 0 : 1;
       })
@@ -584,7 +632,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     if (transform.k < 1.5) {
     }
     else {
-      var hull = d3.selectAll('.edgelabel')
+      var hull = d3.selectAll('.edgelabel_d')
       hull.attr("visibility", "visible")
 
     }
@@ -593,16 +641,16 @@ function draw_detailed_graph(data, mode, word, metaphor) {
   }
 
   //GROUP
-  groupIds = d3.set(graph.links.map(function (n) { return +n.source_POS; }))
+  groupIds = d3
+    .set(graph.links.map(
+      function (n) {
+        if (n.source.id == App.selectedNode)
+          return n.target_POS;
+        else
+          return n.source_POS;
+      }))
     .values()
-    .map(function (groupId) {
-      return {
-        groupId: groupId,
-        count: graph.links.filter(function (n) { return +n.source_POS == groupId; }).length
-      };
-    })
-    .filter(function (group) { return group.count > 2; })
-    .map(function (group) { return group.groupId; });
+
 
   paths = groups.selectAll('.path_placeholder')
     .data(groupIds, function (d) { return +d; })
@@ -610,6 +658,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     .append('g')
     .attr('class', 'path_placeholder')
     .append('path')
+    .attr('class','group-path')
     .attr('stroke', function (d) { return color(d); })
     .attr('fill', function (d) { return color(d); })
     .attr('opacity', 0);
@@ -653,11 +702,11 @@ function draw_detailed_graph(data, mode, word, metaphor) {
         return 'translate(' + d.x + ',' + d.y + ')';
       });
 
-    edgepaths.attr('d', function (d) {
+    edgepaths_d.attr('d', function (d) {
       return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
     });
 
-    edgelabels.attr('transform', function (d) {
+    edgelabels_d.attr('transform', function (d) {
       if (d.target.x < d.source.x) {
         var bbox = this.getBBox();
 
@@ -669,7 +718,9 @@ function draw_detailed_graph(data, mode, word, metaphor) {
         return 'rotate(0)';
       }
     });
+
     updateGroups();
+    
   }
 
 
@@ -677,10 +728,21 @@ function draw_detailed_graph(data, mode, word, metaphor) {
   // and return the convex hull of the specified points
   // (3 points as minimum, otherwise returns null)
   var polygonGenerator = function (groupId) {
+
     var node_coords = node
-      .filter(function (d) { return d.group == groupId; })
+      .filter(function (d) {
+        return posDict[d.id] == groupId;
+      })
       .data()
       .map(function (d) { return [d.x, d.y]; });
+
+    if (node_coords.length == 0)
+      return null;
+
+    else if (node_coords.length < 3) {
+      node_coords.push([node_coords[0][0] + 0.1, node_coords[0][1] + 0.1]);
+      node_coords.push([node_coords[0][0] - 0.1, node_coords[0][1] - 0.1]);
+    }
 
     return d3.polygonHull(node_coords);
   };
@@ -688,8 +750,18 @@ function draw_detailed_graph(data, mode, word, metaphor) {
 
 
   function updateGroups() {
+
     groupIds.forEach(function (groupId) {
-      var path = paths.filter(function (d) { return d == groupId; })
+      if (polygonGenerator(groupId) == null)
+        groupIds.pop(groupId);
+    });
+
+    //console.log(groupIds);
+
+    groupIds.forEach(function (groupId) {
+      var path = paths.filter(function (d) {
+        return d == groupId;
+      })
         .attr('transform', 'scale(1) translate(0,0)')
         .attr('d', function (d) {
           polygon = polygonGenerator(d);
@@ -732,7 +804,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
   // drag groups
   function group_dragstarted(groupId) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d3.select(this).select('path').style('stroke-width', 3);
+    d3.select(this).select('.group-path').style('stroke-width', 3);
   }
 
   function group_dragged(groupId) {
@@ -746,7 +818,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
 
   function group_dragended(groupId) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d3.select(this).select('path').style('stroke-width', 1);
+    d3.select(this).select('.group-path').style('stroke-width', 1);
   }
 
 
@@ -790,7 +862,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
   function show_novelty(opacity) {
     return d => {
 
-      edgelabels.style('fill-opacity', o => (o.source === d || o.target === d ? 1 : opacity));
+      edgelabels_d.style('fill-opacity', o => (o.source === d || o.target === d ? 1 : opacity));
 
 
     };
@@ -800,7 +872,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
   function fade_novelty(opacity) {
     return d => {
 
-      edgelabels.style('fill-opacity', 0);
+      edgelabels_d.style('fill-opacity', 0);
 
 
     };

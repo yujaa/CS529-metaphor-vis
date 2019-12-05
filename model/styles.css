@@ -37,7 +37,7 @@ body {
 
 
 #net-detailed-div{
-  flex: 1px;
+  flex: 1;
   text-align: center;
 }
 
@@ -177,6 +177,11 @@ input[type=text] {
   fill: #777;
   font: 10px sans-serif;
   text-anchor: middle;
+}
+
+.group-path {
+  fill-opacity: .1;
+  stroke-opacity: 1;
 }
 
 .node-text {

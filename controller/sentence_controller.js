@@ -25,9 +25,9 @@ function getSentences(word){
 
         wordPOS_color = ""
         metaphorPOS_color = ""
-        console.log(sentenceArr[d]);
+        //console.log(sentenceArr[d]);
         var newNode = document.createElement('p');
-        console.log(wordArr[d]);
+        //console.log(wordArr[d]);
         //Adding color to POS Tags
         if (wordPos_Arr[d] == "Noun")
         {
@@ -64,7 +64,7 @@ function getSentences(word){
         //highlight words
         sentenceArr[d] = sentenceArr[d].replace(" "+wordArr[d], " "+"<text style='color:white; background-color: limegreen; font-size:14px'>"+wordArr[d]+"</text>"+" "+wordPOS_color);
         sentenceArr[d] = sentenceArr[d].replace(" "+metaphorArr[d], " "+"<text style='color:white; background-color: orange; font-size:14px'>"+metaphorArr[d]+"</text>"+" "+metaphorPOS_color);
-        console.log(sentenceArr[d]);
+        //console.log(sentenceArr[d]);
         newNode.innerHTML="<li> " + sentenceArr[d] + "</li>";
 
         // Add the contents of sentences to #sentences-tab
