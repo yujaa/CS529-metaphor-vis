@@ -53,7 +53,7 @@ svg{
 
 /* When the checkbox is checked, add a blue background */
 .container3 input:checked ~ .checkmark {
-  background-color:    #766879;
+  background-color:    #7f3b08;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -121,7 +121,7 @@ svg{
 
 /* When the checkbox is checked, add a blue background */
 .container2 input:checked ~ .checkmark {
-  background-color:   #e8225e;
+  background-color:   HotPink;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -189,7 +189,7 @@ svg{
 
 /* When the checkbox is checked, add a blue background */
 .container1 input:checked ~ .checkmark {
-  background-color:   #21c9a5; 
+  background-color:   #542788;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -257,7 +257,7 @@ svg{
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: LimeGreen;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
