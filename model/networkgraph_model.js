@@ -19,12 +19,12 @@ var svg = App.svg;
 
 
 //add legend
-svg.append("circle").attr("cx", 20).attr("cy", 50).attr("r", 6).style("fill", "skyblue")
-svg.append("circle").attr("cx", 20).attr("cy", 75).attr("r", 6).style("fill", "orchid")
-svg.append("circle").attr("cx", 20).attr("cy", 100).attr("r", 6).style("fill", "orange")
-svg.append("text").attr("x", 35).attr("y", 50).text("word").style("font-size", "12px").attr("alignment-baseline", "middle")
-svg.append("text").attr("x", 35).attr("y", 75).text("word/metaphor").style("font-size", "12px").attr("alignment-baseline", "middle")
-svg.append("text").attr("x", 35).attr("y", 100).text("metaphor").style("font-size", "12px").attr("alignment-baseline", "middle")
+svg.append("circle").attr("cx", 20).attr("cy", 50).attr("r", 7).style("fill", "skyblue")
+svg.append("circle").attr("cx", 20).attr("cy", 75).attr("r", 7).style("fill", "plum")
+svg.append("circle").attr("cx", 20).attr("cy", 100).attr("r", 7).style("fill", "orange")
+svg.append("text").attr("x", 35).attr("y", 50).text("word").style("font-size", "14px").attr("alignment-baseline", "middle")
+svg.append("text").attr("x", 35).attr("y", 75).text("word/metaphor").style("font-size", "14px").attr("alignment-baseline", "middle")
+svg.append("text").attr("x", 35).attr("y", 100).text("metaphor").style("font-size", "14px").attr("alignment-baseline", "middle")
 
 //add encompassing group for the zoom 
 var g = svg.append("g")
@@ -33,7 +33,7 @@ var g = svg.append("g")
 //set color for each node type
 var color = d3.scaleOrdinal()
   .domain(["w", "b", "m"])
-  .range(["skyblue", "orchid", "orange"]);
+  .range(["skyblue", "plum", "orange"]);
 
 
 //set font size of the text
