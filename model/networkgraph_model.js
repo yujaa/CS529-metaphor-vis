@@ -19,12 +19,12 @@ var svg = App.svg;
 
 
 //add legend
-svg.append("circle").attr("cx", 20).attr("cy", 50).attr("r", 7).style("fill", "skyblue")
+/*svg.append("circle").attr("cx", 20).attr("cy", 50).attr("r", 7).style("fill", "skyblue")
 svg.append("circle").attr("cx", 20).attr("cy", 75).attr("r", 7).style("fill", "plum")
 svg.append("circle").attr("cx", 20).attr("cy", 100).attr("r", 7).style("fill", "orange")
 svg.append("text").attr("x", 35).attr("y", 50).text("word").style("font-size", "14px").attr("alignment-baseline", "middle")
 svg.append("text").attr("x", 35).attr("y", 75).text("word/metaphor").style("font-size", "14px").attr("alignment-baseline", "middle")
-svg.append("text").attr("x", 35).attr("y", 100).text("metaphor").style("font-size", "14px").attr("alignment-baseline", "middle")
+svg.append("text").attr("x", 35).attr("y", 100).text("metaphor").style("font-size", "14px").attr("alignment-baseline", "middle")*/
 
 //add encompassing group for the zoom 
 var g = svg.append("g")
