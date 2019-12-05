@@ -61,8 +61,8 @@ function getSentences(word){
             metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:#7f3b08;'>[Adverb]</sub>" 
         }
         //highlight words
-        sentenceArr[d] = sentenceArr[d].replace(" "+wordArr[d], " "+"<text style='color:black; font-weight:bold; background-color: skyblue; font-size:14px'>"+wordArr[d]+"</text>"+" "+wordPOS_color);
-        sentenceArr[d] = sentenceArr[d].replace(" "+metaphorArr[d], " "+"<text style='color:black; font-weight:bold; background-color: orange; font-size:14px'>"+metaphorArr[d]+"</text>"+" "+metaphorPOS_color);
+        sentenceArr[d] = sentenceArr[d].replace(" "+wordArr[d], " "+"<text style='color:black; opacity:0.7; font-weight:bold; background-color: skyblue; font-size:14px'>"+wordArr[d]+"</text>"+" "+wordPOS_color);
+        sentenceArr[d] = sentenceArr[d].replace(" "+metaphorArr[d], " "+"<text style='color:black; opacity:0.7; font-weight:bold; background-color: orange; font-size:14px'>"+metaphorArr[d]+"</text>"+" "+metaphorPOS_color);
         //console.log(sentenceArr[d]);
         newNode.innerHTML="<li> " + sentenceArr[d] + "</li>";
 
