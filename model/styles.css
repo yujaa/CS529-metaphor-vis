@@ -336,9 +336,13 @@ svg{
 
 #sentences-div{
   flex:3;
+  font-family: 'Barlow', sans-serif;
 }
 
-
+.detailed-text{
+  font-size:15px;
+  font-weight:bold;
+}
 
 .view{
   margin: 5px;

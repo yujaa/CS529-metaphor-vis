@@ -110,6 +110,7 @@ function draw_graph(data, mode, word, metaphor) {
 
     .on('click', function (d) {
       //console.log(d.id)
+      clear_search();
       getSentences(d.id);
       App.selectedNode = d.id;
       search();
@@ -149,7 +150,7 @@ function draw_graph(data, mode, word, metaphor) {
         .strength(-2)
         .distanceMax(width / 3, height / 3))
 
-    .force("collide", d3.forceCollide(20).strength(1).iterations(10))
+    .force("collide", d3.forceCollide(30).strength(1).iterations(10))
     //.force('x', d3.forceX(width / 2).strength(0.5))
     .force('center', d3.forceCenter(width*2.5, height))
     .force('y', d3.forceY(height / 2).strength(0.03));
@@ -440,8 +441,31 @@ function draw_detailed_graph(data, mode, word, metaphor) {
   // create groups, links and nodes
 
   groups = svg.append('g').attr('class', 'groups');
-
+  
   let g = svg.append('g');
+
+  
+  g.append("text")
+    .text("NOUN")
+    .attr("class","detailed-text")
+    .attr("transform", "translate(10,20)");
+
+    g.append("text")
+    .text("VERB")
+    .attr("class","detailed-text")
+    .attr("transform", "translate("+(width-80)+",20)");
+
+    g.append("text")
+    .text("ADVERB")
+    .attr("class","detailed-text")
+    .attr("transform", "translate(10,"+(height-20)+")");
+
+    g.append("text")
+    .text("ADJECTIVE")
+    .attr("class","detailed-text")
+    .attr("transform", "translate("+(width-120)+","+(height-20)+")");
+
+    
 
   link = g.selectAll(".link")
     .data(graph.links)
@@ -568,9 +592,9 @@ function draw_detailed_graph(data, mode, word, metaphor) {
 
     .on('click', function (d) {
       //console.log(d.id)
-      getSentences(d.id);
-      App.selectedNode = d.id;
-      search();
+      getSentences2(d.id, App.selectedNode);
+      // App.selectedNode = d.id;
+      // search();
 
     });
 
@@ -619,7 +643,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
         return font_size(d.freq) * transform.k < 18 ? 0 : 1;
       })
 
-
+  
 
     if (transform.k < 1.5) {
     }
@@ -710,6 +734,7 @@ function draw_detailed_graph(data, mode, word, metaphor) {
         return 'rotate(0)';
       }
     });
+
 
     updateGroups();
 

@@ -5,7 +5,7 @@ var charts;
 var brush;
 var gBrush;
 var x;
-App.brushRange = [1.2, 1.3];
+App.brushRange = [1.4, 1.7];
 
 
 d3.json("./model/data/train_graph_data.json", function (error, data) {
@@ -28,20 +28,19 @@ async function filter_by_keyword_score(data, keyword, minScore, maxScore) {
 
     var filteredLinks;
 
-
+    let score_filtered =  data.links.filter(d => (d.score >= minScore) && (d.score <= maxScore));
     if (!Array.isArray(keyword)) {
-      filteredLinks = data.links.filter(d => (d.score >= minScore) && (d.score <= maxScore) &&
-        ((keyword === d.target) || keyword === d.source));
+      
+      filteredLinks = score_filtered.filter(d =>((keyword === d.target) || keyword === d.source));
 
-      metaphor = data.links.filter(d => (d.score >= minScore) && (d.score <= maxScore) && (keyword === d.source));
+      metaphor = score_filtered.filter(d => keyword === d.source);
       metaphor = metaphor.map(d => d.target);
-      word = data.links.filter(d => (d.score >= minScore) && (d.score <= maxScore) && (keyword === d.target));
+      word = score_filtered.filter(d => keyword === d.target);
       word = word.map(d => d.source);
     }
 
     else
-      filteredLinks = data.links.filter(d => (d.score >= minScore) && (d.score <= maxScore) &&
-        ((keyword.includes(d.target) || keyword.includes(d.source))));
+      filteredLinks = score_filtered.filter(d => ((keyword.includes(d.target) || keyword.includes(d.source))));
 
 
     filteredLinks = filteredLinks.filter(d => (pos_w.includes(d.source_POS) && pos_m.includes(d.target_POS)));
@@ -96,7 +95,7 @@ d3.csv("../model/data/train_data.csv", function (error, data) {
       .x(d3.scaleLinear()
         .domain([0, 2.5])
         .rangeRound([0, 10 * 35]))
-      .filter([1.2, 1.3])
+      .filter([1.4, 1.7])
 
   ];
 
@@ -158,8 +157,6 @@ d3.csv("../model/data/train_data.csv", function (error, data) {
 
     let keyword = await promise;
     let promise2 = new Promise((resolve, reject) => {
-
-
       filter_by_keyword_score(App.data, keyword, App.brushRange[0], App.brushRange[1]);
 
     });

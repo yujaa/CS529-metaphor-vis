@@ -59,6 +59,7 @@ const forceY = d3.forceY(height / 2).strength(0.25)
 
 
 //legend
+
 var legend = svg.append("g")
   .attr("class", "legend")
   .attr("transform", "translate(" + (50) + "," + (height - 20) + ")")
