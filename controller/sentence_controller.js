@@ -31,35 +31,35 @@ function getSentences(word){
         //Adding color to POS Tags
         if (wordPos_Arr[d] == "Noun")
         {
-            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:DeepPink;'>[Noun]</sub>"
+            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:LimeGreen;'>[Noun]</sub>"
         }
         else if (wordPos_Arr[d] == "Verb")
         {
-            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:SeaGreen;'>[Verb]</sub>"
+            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:Magenta;'>[Verb]</sub>"
         }
         else if (wordPos_Arr[d] == "Adjective")
         {
-            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:Firebrick;'>[Adjective]</sub>"
+            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:HotPink;'>[Adjective]</sub>"
         }
         if (wordPos_Arr[d] == "Adverb")
         {
-            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:Sienna;'>[Adverb]</sub>" 
+            wordPOS_color = "<sub style='font-size:small; font-style:italic; color:DarkTurquoise;'>[Adverb]</sub>" 
         }
         if (metaphorPos_Arr[d] == "Noun")
         {
-            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:DeepPink;'>[Noun]</sub>"
+            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:LimeGreen;'>[Noun]</sub>"
         }
         else if (metaphorPos_Arr[d] == "Verb")
         {
-            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:SeaGreen;'>[Verb]</sub>"
+            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:Magenta;'>[Verb]</sub>"
         }
         else if (metaphorPos_Arr[d] == "Adjective")
         {
-            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:Firebrick;'>[Adjective]</sub>"
+            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:HotPink;'>[Adjective]</sub>"
         }
         else if (metaphorPos_Arr[d] == "Adverb")
         {
-            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:Sienna;'>[Adverb]</sub>" 
+            metaphorPOS_color = "<sub style='font-size:small; font-style:italic; color:DarkTurquoise;'>[Adverb]</sub>" 
         }
         //highlight words
         sentenceArr[d] = sentenceArr[d].replace(" "+wordArr[d], " "+"<text style='color:black; font-weight:bold; background-color: skyblue; font-size:14px'>"+wordArr[d]+"</text>"+" "+wordPOS_color);
