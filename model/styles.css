@@ -178,3 +178,20 @@ input[type=text] {
   font: 10px sans-serif;
   text-anchor: middle;
 }
+
+.node-text {
+  fill:black;
+  stroke: white;
+ // stroke-width: 1px;
+  opacity: 0.8;
+
+}
+
+.zoomed-node-text
+{
+  fill:black;
+  stroke: white;
+ // stroke-width: 1px;
+  opacity: 0.8;
+
+}
