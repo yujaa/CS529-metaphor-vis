@@ -13,6 +13,11 @@ text {
   font-family: sans-serif;
   font-size: 10px;
 }
+input.small {
+      width: 5px;
+      height: 5px;
+      }
+
 </style>
 <!DOCTYPE html>
 <meta charset="utf-8">
@@ -27,11 +32,7 @@ text {
 	</div>
 	<div id="first-row" style="display:flex">
 		<div class="view" id="net-graph-div"></div>
-
 		<div class="view" id="net-detailed-div">
-
-
-
 		</div>
 	</div>
 	<div id="second-row" style="display:flex">
@@ -61,18 +62,42 @@ text {
 					<p style=" margin: 10px; font-weight: bold;">POS Filtering</p>
 					<p style=" margin: 10px; font-weight: bold;">WORD</p>
 						<div style="display:inline-flex;">
-							<input class="pos-option-w" type="checkbox" id="noun-w" value="noun" onclick="checkbox()" checked>Noun<br>
-						  <input class="pos-option-w" type="checkbox" id="verb-w" value="verb" onclick="checkbox() " checked>Verb<br>
-						  <input class="pos-option-w" type="checkbox" id="adjective-w" value="adjective" onclick="checkbox()" checked>Adjective<br>
-						  <input class="pos-option-w" type="checkbox" id="adverb-w" value="adverb" onclick="checkbox()" checked>Adverb<br>
+							<label class="container small">Noun
+							  <input class="pos-option-w small" type="checkbox" id="noun-w" value="noun" onclick="checkbox()" checked>
+							  <span class="checkmark"></span>
+							</label>
+							<label class="container1">Verb
+							  <input class="pos-option-w" type="checkbox" id="verb-w" value="verb" onclick="checkbox() " checked>
+							  <span class="checkmark"></span>
+							</label>
+							<label class="container2">Adjective
+							  <input class="pos-option-w" type="checkbox" id="adjective-w" value="adjective" onclick="checkbox()" checked>
+							  <span class="checkmark"></span>
+							</label>
+							<label class="container3">Adverb
+							  <input class="pos-option-w" type="checkbox" id="adverb-w" value="adverb" onclick="checkbox()" checked>
+							  <span class="checkmark"></span>
+							</label>
 					  </div>
 				  <p style=" margin: 10px; font-weight: bold;">METAPHOR</p>	
 				  <div style="display:inline-flex;">
-						<input class="pos-option-m" type="checkbox" id="noun-m" value="noun" onclick="checkbox()" checked>Noun<br>
-					  <input class="pos-option-m" type="checkbox" id="verb-m" value="verb" onclick="checkbox() " checked>Verb<br>
-					  <input class="pos-option-m" type="checkbox" id="adjective-m" value="adjective" onclick="checkbox()" checked>Adjective<br>
-					  <input class="pos-option-m" type="checkbox" id="adverb-m" value="adverb" onclick="checkbox()" checked>Adverb<br>
-				  </div>
+							<label class="container">Noun
+							  <input class="pos-option-m" type="checkbox" id="noun-m" value="noun" onclick="checkbox()" checked>
+							  <span class="checkmark"></span>
+							</label>
+							<label class="container1">Verb
+							  <input class="pos-option-m" type="checkbox" id="verb-m" value="verb" onclick="checkbox() " checked>
+							  <span class="checkmark"></span>
+							</label>
+							<label class="container2">Adjective
+							  <input class="pos-option-m" type="checkbox" id="adjective-m" value="adjective" onclick="checkbox()" checked>
+							  <span class="checkmark"></span>
+							</label>
+							<label class="container3">Adverb
+							  <input class="pos-option-m" type="checkbox" id="adverb-m" value="adverb" onclick="checkbox()" checked>
+							  <span class="checkmark"></span>
+							</label>
+					  </div>
 				</div>
 	  
 			  </div>
