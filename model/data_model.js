@@ -71,7 +71,7 @@ async function filter_by_keyword_score(data, keyword, minScore, maxScore) {
 
 }
 
-d3.csv("../model/data/train_data.csv", function (error, data) {
+d3.csv("./model/data/train_data.csv", function (error, data) {
 
   var formatNumber = d3.format(",d");
 
@@ -136,6 +136,13 @@ d3.csv("../model/data/train_data.csv", function (error, data) {
 
   async function datasetList(div) {
     var dataByScore = nestByScore.entries(score.top(10000));
+svg.append("rect").attr("height", 100).attr("width", 100).attr("x", 15).attr("y", 20).style("fill", "white")
+svg.append("circle").attr("cx", 20).attr("cy", 50).attr("r", 7).style("fill", "skyblue")
+svg.append("circle").attr("cx", 20).attr("cy", 75).attr("r", 7).style("fill", "orange")
+svg.append("circle").attr("cx", 20).attr("cy", 100).attr("r", 7).style("fill", "plum")
+svg.append("text").attr("x", 35).attr("y", 50).text("word").style("font-size", "14px").attr("alignment-baseline", "middle")
+svg.append("text").attr("x", 35).attr("y", 75).text("metaphor").style("font-size", "14px").attr("alignment-baseline", "middle")
+svg.append("text").attr("x", 35).attr("y", 100).text("word/metaphor").style("font-size", "14px").attr("alignment-baseline", "middle")
     let promise = new Promise((resolve, reject) => {
       if (App.keyword == null) {
         App.keyword = [];
