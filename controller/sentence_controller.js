@@ -62,7 +62,7 @@ function getSentences(word){
             metaphorPOS_color = "<text style='color:white; background-color: green; font-size:14px'>"+ "(" + metaphorPos_Arr[d] + ")" + "</text>" 
         }
         //highlight words
-        sentenceArr[d] = sentenceArr[d].replace(" "+wordArr[d], " "+"<text style='color:white; background-color: limegreen; font-size:14px'>"+wordArr[d]+"</text>"+" "+wordPOS_color);
+        sentenceArr[d] = sentenceArr[d].replace(" "+wordArr[d], " "+"<text style='color:white; background-color: skyblue; font-size:14px'>"+wordArr[d]+"</text>"+" "+wordPOS_color);
         sentenceArr[d] = sentenceArr[d].replace(" "+metaphorArr[d], " "+"<text style='color:white; background-color: orange; font-size:14px'>"+metaphorArr[d]+"</text>"+" "+metaphorPOS_color);
         console.log(sentenceArr[d]);
         newNode.innerHTML="<li> " + sentenceArr[d] + "</li>";
