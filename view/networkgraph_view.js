@@ -681,7 +681,8 @@ function draw_detailed_graph(data, mode, word, metaphor) {
           return n.source_POS;
       }))
     .values()
-
+ 
+  var colorArr={"Noun":"#32CD32","Verb":"#542788", "Adjective":"#FF69B4", "Adverb":"#7F3B08"};
 
   paths = groups.selectAll('.path_placeholder')
     .data(groupIds, function (d) { return +d; })
@@ -690,8 +691,8 @@ function draw_detailed_graph(data, mode, word, metaphor) {
     .attr('class', 'path_placeholder')
     .append('path')
     .attr('class', 'group-path')
-    .attr('stroke', function (d) { return color(d); })
-    .attr('fill', function (d) { return color(d); })
+    .attr('stroke', function (d) { ; })
+    .attr('fill', function (d) { return colorArr[d]; })
     .attr('opacity', 0);
 
   paths
